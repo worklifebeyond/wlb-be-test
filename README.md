@@ -49,4 +49,6 @@ Membuat API untuk aplikasi Blog yang memiliki fitur:
 
 2. Menyertakan ERD dari rancangan database yang dibuat.
 
+3. Output API boleh berupa `REST API` atau `GraphQL`
+
 
