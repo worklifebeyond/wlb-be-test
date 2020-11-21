@@ -11,10 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Like.belongsTo(models.Post);
+      Like.belongsTo(models.User);
     }
   };
   Like.init({
-    count: DataTypes.INTEGER
+    PostId: DataTypes.INTEGER,
+    UserId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Like',

@@ -1,4 +1,4 @@
-const registerRoute = require('./register');
+const usersRoute = require('./users');
 
 function loadRoutes(router) {
   registerRoute(router);
