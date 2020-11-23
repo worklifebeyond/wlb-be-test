@@ -46,7 +46,7 @@ _Request Body_
 {
   "username": "<users's name>",
   "email": "<user's email>",
-  "password": "<user's password>",
+  "password": "<user's password>"
 }
 ```
 
@@ -58,6 +58,8 @@ _Response (201 - Created)_
   "email": "<user's email>",
   "password": "<user's password>",
   "status": "registered",
+  "createdAt": "<the time when the new user was created>",
+  "updatedAt": "<the time when the new user was updated>"
 }
 ```
 
@@ -74,7 +76,7 @@ _Response (400 - Bad Request)_
 _Response (500 - Internal Server Error)_
 ```
 [
-  "<error message>"
+  "Internal Server Error"
 ]
 ```
 ---
@@ -106,14 +108,14 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "The verification link is invalid."
+  "The user verification link is invalid."
 ]
 ```
 
 _Response (500 - Internal Server Error)_
 ```
 [
-  "<error message>"
+  "Internal Server Error"
 ]
 ```
 ---

@@ -1,8 +1,9 @@
 const Controller = require('../../controllers/UserController');
 
-function registerRoute(router) {
-  router.get('/users/register', Controller.register);
-  // router.post('/register', Controller.register);
+function usersRoute(router) {
+  router.post('/users/register', Controller.register);
+  router.put('/users/verify', Controller.verify);
+  // router.post('/users/login', Controller.login);
 };
 
-module.exports = registerRoute;
+module.exports = usersRoute;

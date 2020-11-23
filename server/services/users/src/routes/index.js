@@ -1,7 +1,7 @@
 const usersRoute = require('./users');
 
 function loadRoutes(router) {
-  registerRoute(router);
+  usersRoute(router);
 };
 
 module.exports = loadRoutes;

@@ -18,18 +18,6 @@ app
 
 loadRoutes(router);
 
-// router
-//   .get('/', ctx => {
-//     ctx.body = 'Hello World';
-//   })
-//   .get('/aeiou', ctx => {
-//     ctx.body = 'aeiou';
-//   });
-// 
-// router.get('/test', ctx => {
-//   ctx.body = 'test';
-// });
-
 app.listen(port, () => {
   console.log(`users service running at http://localhost:${port}`);
 });
