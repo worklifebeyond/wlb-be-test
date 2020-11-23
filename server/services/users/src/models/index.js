@@ -13,7 +13,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
   // sequelize = new Sequelize(config.database, config.username, config.password, config);
-  sequelize = new Sequelize('postgres://brfwayyd:3Ze-is7E93PJvsJm_uTUUDeyc9p6U6Mq@rosie.db.elephantsql.com:5432/brfwayyd');
+  sequelize = new Sequelize(process.env.ELEPHANTSQL_URL);
 }
 
 fs
