@@ -7,11 +7,17 @@ function errorHandler(err) {
         errors.push(error.message);
       });
       break;
+    case 'JsonWebTokenError' :
+      errors.push(err.message);
+      break;
     case 'InternalServerError' :
       errors.push(err.message);
       break;
     case 'Error' :
       errors.push(err.message);
+      if (err.message === 'The user is not authenticated.') {
+        status = 401;
+      }
       break;
     default :
       errors.push('Internal Server Error');

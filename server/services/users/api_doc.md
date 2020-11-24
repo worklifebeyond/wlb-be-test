@@ -12,12 +12,13 @@ Its Users service has :
 ## Endpoints
 ```
  - POST /users/register
- - GET  /users/verify
+ - GET  /users/verify?token=<account_verification_token>
  - POST /users/login
  
  - POST   /posts
  - GET    /posts
  - GET    /posts/:id
+ - GET    /posts/user/:id
  - PUT    /posts/:id
  - DELETE /posts/:id
  
@@ -53,13 +54,13 @@ _Request Body_
 _Response (201 - Created)_
 ```
 {
-  "id": "<user's id>",
+  "id": <user's id>,
   "username": "<user's name>",
   "email": "<user's email>",
   "password": "<user's password>",
   "status": "registered",
-  "createdAt": "<the time when the new user was created>",
-  "updatedAt": "<the time when the new user was updated>"
+  "createdAt": "<the time when the user was created>",
+  "updatedAt": "<the time when the user was updated>"
 }
 ```
 
@@ -80,7 +81,7 @@ _Response (500 - Internal Server Error)_
 ]
 ```
 ---
-### GET /users/verify
+### GET /users/verify?token=<account_verification_token>
 
 > Verify user
 
@@ -162,107 +163,59 @@ _Response (500 - Internal Server Error)_
 ]
 ```
 ---
-### POST /googleLogin
+### POST /posts
 
-> Login user with Google account
-
-_Request Header_
-```
-not needed
-```
-
-_Request Body_
-```
-not needed
-```
-
-_Response (200 - OK)_
-```
-{
-  "access_token": "<your access token>",
-  "UserId": "<your user id>"
-}
-```
-
-_Response (400 - Bad Request)_
-```
-[
-  "The Email or Password is invalid."
-]
-```
-
-_Response (500 - Internal Server Error)_
-```
-[
-  "<error message>"
-]
-```
----
-### POST /todos
-
-> Create new todo
+> Create blog post
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<user's access token>"
 }
 ```
 
 _Request Body_
 ```
 {
-  "title": "Learn REST API",
-  "description": "Learn how to create RESTful API with Express and Sequelize",
-  "status": "ongoing",
-  "due_date": "2020-01-29",
-  "UserId": "1"
+  "title": "<post title>",
+  "content": "<post content>"
 }
 ```
 
 _Response (201 - Created)_
 ```
 {
-  "id": "1",
-  "title": "Learn REST API",
-  "description": "Learn how to create RESTful API with Express and Sequelize",
-  "status": "ongoing",
-  "due_date": "2020-01-29T00:00:00.000Z",
-  "UserId": "1",
-  "createdAt": "2020-01-27T07:15:12.149Z",
-  "updatedAt": "2020-01-27T07:15:12.149Z",
+  "id": 1,
+  "title": "<post title>",
+  "content": "<post content>",
+  "UserId": <user's id>,
+  "createdAt": "<the time when the post was created>",
+  "updatedAt": "<the time when the post was updated>"
 }
 ```
 
 _Response (401 - Unauthorized)_
 ```
 [
-  "The user is not authenticated"
-]
-```
-
-_Response (403 - Forbidden)_
-```
-[
-  "The user is not authorized."
+  "The user is not authenticated."
 ]
 ```
 
 _Response (500 - Internal Server Error)_
 ```
 [
-  "<error message>"
+  "Internal Server Error"
 ]
 ```
 ---
-### GET /todos
+### GET /posts
 
-> Get all todos
+> Get all blog posts
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<user's access token>"
 }
 ```
 
@@ -275,57 +228,51 @@ _Response (200 - OK)_
 ```
 [
   {
-    "id": "1",
-    "title": "Learn REST API",
-    "description": "Learn how to create RESTful API with Express and Sequelize",
-    "status": "ongoing",
-    "due_date": "2020-01-29T00:00:00.000Z",
-    "UserId": "1",
-    "createdAt": "2020-01-27T07:15:12.149Z",
-    "updatedAt": "2020-01-27T07:15:12.149Z",
+    "id": <post id>,
+    "title": "<post title>",
+    "content": "<post content>",
+    "UserId": <user's id>,
+    "createdAt": "<the time when the post was created>",
+    "updatedAt": "<the time when the post was updated>",
+    "User": {
+      "id": <user's id>,
+      "username": "<user's name>",
+      "email": "<user's email>",
+      "password": "<user's hashed password>",
+      "status": "<user's account status>",
+      "createdAt": "<the time when the user was created>",
+      "updatedAt": "<the time when the user was updated>"
+    },
+    "Likes": [array of post likes],
+    "Comments": [array of post comments]
   },
-  {
-    "id": "2",
-    "title": "Learn API Documentation",
-    "description": "Learn how to create API Documentation with REST standard",
-    "status": "done",
-    "due_date": "2020-01-29T00:00:00.000Z",
-    "UserId": "1",
-    "createdAt": "2020-01-28T07:15:12.149Z",
-    "updatedAt": "2020-01-28T07:15:12.149Z",
-  }
+  ...
 ]
 ```
 
 _Response (401 - Unauthorized)_
 ```
 [
-  "The user is not authenticated"
+  "The user is not authenticated."
 ]
 ```
 
-_Response (403 - Forbidden)_
-```
-[
-  "The user is not authorized."
-]
-```
 
 _Response (500 - Internal Server Error)_
 ```
 [
-  "<error message>"
+  "Internal Server Error"
 ]
 ```
 ---
-### GET /todos/:id
+### GET /posts/:id
 
-> Get todos by UserId
+> Get a blog post by its id
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<user's access token>"
 }
 ```
 
@@ -336,129 +283,154 @@ not needed
 
 _Response (200 - OK)_
 ```
-[
-  {
-    "id": "1",
-    "title": "Learn REST API",
-    "description": "Learn how to create RESTful API with Express and Sequelize",
-    "status": "ongoing",
-    "due_date": "2020-01-29T00:00:00.000Z",
-    "UserId": "1",
-    "createdAt": "2020-01-27T07:15:12.149Z",
-    "updatedAt": "2020-01-27T07:15:12.149Z",
+{
+  "id": <post id>,
+  "title": "<post title>",
+  "content": "<post content>",
+  "UserId": <user's id>,
+  "createdAt": "<the time when the post was created>",
+  "updatedAt": "<the time when the post was updated>",
+  "User": {
+    "id": <user's id>,
+    "username": "<user's name>",
+    "email": "<user's email>",
+    "password": "<user's hashed password>",
+    "status": "<user's account status>",
+    "createdAt": "<the time when the user was created>",
+    "updatedAt": "<the time when the user was updated>"
   },
-  {
-    "id": "2",
-    "title": "Learn API Documentation",
-    "description": "Learn how to create API Documentation with REST standard",
-    "status": "done",
-    "due_date": "2020-01-29T00:00:00.000Z",
-    "UserId": "1",
-    "createdAt": "2020-01-28T07:15:12.149Z",
-    "updatedAt": "2020-01-28T07:15:12.149Z",
-  }
-]
+  "Likes": [array of post likes],
+  "Comments": [array of post comments]
+}
 ```
 
-_Response (400 - Bad Request)_
-```
-[
-  "The user with id <UserId> was not found."
-]
-```
 
 _Response (401 - Unauthorized)_
 ```
 [
-  "The user is not authenticated"
-]
-```
-
-_Response (403 - Forbidden)_
-```
-[
-  "The user is not authorized."
+  "The user is not authenticated."
 ]
 ```
 
 _Response (500 - Internal Server Error)_
 ```
 [
-  "<error message>"
+  "Internal Server Error"
 ]
 ```
 ---
-### PUT /todos/:id
+### GET /posts/user/:id
 
-> Update todo by todo_id
+> Get blog posts by user id
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<user's access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+[
+  {
+    "id": <post id>,
+    "title": "<post title>",
+    "content": "<post content>",
+    "UserId": <user's id>,
+    "createdAt": "<the time when the post was created>",
+    "updatedAt": "<the time when the post was updated>",
+    "User": {
+      "id": <user's id>,
+      "username": "<user's name>",
+      "email": "<user's email>",
+      "password": "<user's hashed password>",
+      "status": "<user's account status>",
+      "createdAt": "<the time when the user was created>",
+      "updatedAt": "<the time when the user was updated>"
+    },
+    "Likes": [array of post likes],
+    "Comments": [array of post comments]
+  },
+  ...
+]
+```
+
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
+### PUT /posts/:id
+
+> Update a blog post by its id
+
+_Request Header_
+```
+{
+  "access_token": "<user's access token>"
 }
 ```
 
 _Request Body_
 ```
 {
-  "title": "Learn Node",
-  "description": "Learn how to create app with Express and Sequelize",
-  "status": "ongoing",
-  "due_date": "2020-01-30"
+  "title": "<post title>",
+  "content": "<post content>"
 }
 ```
 
 _Response (200 - OK)_
 ```
 {
-  "id": "1",
-  "title": "Learn Node",
-  "description": "Learn how to create app with Express and Sequelize",
-  "status": "ongoing",
-  "due_date": "2020-01-30",
-  "UserId": "1",
-  "createdAt": "2020-01-27T07:15:12.149Z",
-  "updatedAt": "2020-01-29T07:15:12.149Z",
+  "id": <post id>,
+  "title": "<post title>",
+  "content": "<post content>",
+  "UserId": <user's id>,
+  "createdAt": "<the time when the post was created>",
+  "updatedAt": "<the time when the post was updated>"
 }
 ```
 
-_Response (400 - Bad Request)_
-```
-[
-  "The todo with id <todo id> was not found."
-]
-```
 
 _Response (401 - Unauthorized)_
 ```
 [
-  "The user is not authenticated"
+  "The user is not authenticated."
 ]
 ```
 
-_Response (403 - Forbidden)_
-```
-[
-  "The user is not authorized."
-]
-```
 
 _Response (500 - Internal Server Error)_
 ```
 [
-  "<error message>"
+  "Internal Server Error"
 ]
 ```
 ---
-### DELETE /todos/:id
+### DELETE /posts/:id
 
-> Delete todo by todo_id
+> Delete a blog post by its id
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "access_token": "<user's access token>"
 }
 ```
 
@@ -470,41 +442,27 @@ not needed
 _Response (200 - OK)_
 ```
 {
-  "id": "2",
-  "title": "Learn API Documentation",
-  "description": "Learn how to create API Documentation with REST standard",
-  "status": "done",
-  "due_date": "2020-01-29",
-  "UserId": "1",
-  "createdAt": "2020-01-28T07:15:12.149Z",
-  "updatedAt": "2020-01-28T07:15:12.149Z",
+  "id": <post id>,
+  "title": "<post title>",
+  "content": "<post content>",
+  "UserId": <user's id>,
+  "createdAt": "<the time when the post was created>",
+  "updatedAt": "<the time when the post was updated>"
 }
 ```
 
-_Response (400 - Bad Request)_
-```
-[
-  "The todo with id <todo id> was not found."
-]
-```
 
 _Response (401 - Unauthorized)_
 ```
 [
-  "The user is not authenticated"
+  "The user is not authenticated."
 ]
 ```
 
-_Response (403 - Forbidden)_
-```
-[
-  "The user is not authorized."
-]
-```
 
 _Response (500 - Internal Server Error)_
 ```
 [
-  "<error message>"
+  "Internal Server Error"
 ]
 ```
