@@ -80,7 +80,7 @@ _Response (500 - Internal Server Error)_
 ]
 ```
 ---
-### PUT /users/verify?username=<user's name>&email=<user's email>&password=<user's password>
+### GET /users/verify
 
 > Verify user
 
@@ -97,18 +97,18 @@ not needed
 _Response (200 - OK)_
 ```
 {
-  "id": "<user's id>",
-  "username": "<user's name>",
-  "email": "<user's email>",
-  "password": "<user's password>",
-  "status": "active",
+  "message": "User Verification Success"
 }
 ```
 
 _Response (400 - Bad Request)_
 ```
 [
-  "The user verification link is invalid."
+  "The verification link is invalid."
+]
+or
+[
+  "The account has already been verified."
 ]
 ```
 
@@ -147,14 +147,18 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "The Email or Password is invalid."
+  "The email or password is invalid."
+]
+or
+[
+  "Please verify your account."
 ]
 ```
 
 _Response (500 - Internal Server Error)_
 ```
 [
-  "<error message>"
+  "Internal Server Error"
 ]
 ```
 ---

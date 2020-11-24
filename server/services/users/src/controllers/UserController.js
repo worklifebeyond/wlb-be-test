@@ -41,21 +41,19 @@ class UserController {
           email: decoded_user_data.email,
         }
       });
+
+      // Validate the token :
       if (!user) {
-        ctx.body = 'The verification link is broken.';
+        throw new Error('The verification link is invalid.');
       } else if (user.status === 'active') {
-        ctx.body = 'The user has already been verified.';
+        throw new Error('The account has already been verified.');
       } else {
-        const user_activated = await User.update({
-          status: 'active',
-        }, {
-          where: {
-            id: user.id,
-          },
+        const user_activated = await User.update({ status: 'active' }, {
+          where: { id: user.id },
           returning: true,
         });
         ctx.response.status = 200;
-        ctx.body = 'User Verification Success';
+        ctx.body = { message: 'User Verification Success' };
       }
     } catch(err) {
       const { status, errors } = errorHandler(err);
@@ -68,9 +66,26 @@ class UserController {
     const { email, password } = ctx.request.body;
     try {
       const user = await User.findOne({ where: { email }});
-      //
+      
+      // Validate the given email and password :
+      if (!user) {
+        throw new Error('The email or password is invalid.');
+      } else {
+        const password_matched = compare_bcrypt_password(password, user.password);
+        if (!password_matched) {
+          throw new Error('The email or password is invalid.');
+        } else if (password_matched && user.status !== 'active') {
+          throw new Error('Please verify your account.');
+        } else {
+          const access_token = generate_jwt_token(user);
+          ctx.response.status = 200;
+          ctx.body = { access_token, user_id: user.id };
+        }
+      }
     } catch(err) {
-      console.log(err);
+      const { status, errors } = errorHandler(err);
+      ctx.response.status = status;
+      ctx.body = errors;
     }
   }
 }

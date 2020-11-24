@@ -1,8 +1,6 @@
 function errorHandler(err) {
   const errors = [];
   let status = 400;
-  console.log(err.name);
-  console.log(err.message);
   switch(err.name) {
     case 'SequelizeValidationError' :
       err.errors.forEach(error => {
