@@ -39,25 +39,24 @@ class UserController {
         where: {
           username: decoded_user_data.username,
           email: decoded_user_data.email,
-          status: decoded_user_data.status,
         }
       });
       if (!user) {
-        throw new Error('The verification link is broken.');
+        ctx.body = 'The verification link is broken.';
+      } else if (user.status === 'active') {
+        ctx.body = 'The user has already been verified.';
+      } else {
+        const user_activated = await User.update({
+          status: 'active',
+        }, {
+          where: {
+            id: user.id,
+          },
+          returning: true,
+        });
+        ctx.response.status = 200;
+        ctx.body = 'User Verification Success';
       }
-      if (user.status === 'active') {
-        throw new Error('The user has already been verified.');
-      }
-      const user_activated = await User.update({
-        status: 'active',
-      }, {
-        where: {
-          id: user.id,
-        },
-        returning: true,
-      });
-      ctx.response.status = 200;
-      ctx.body = 'User Verification Success';
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
