@@ -28,6 +28,16 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: 'Username must not be empty.',
         },
+        async isUsernameUnique(value) {
+          const user = await User.findOne({
+            where: {
+              username: value,
+            },
+          });
+          if (user) {
+            throw new Error('Username must be unique.');
+          }
+        },
       },
     },
     email: {
@@ -35,13 +45,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Email must not be empty.',
+        },
         isEmail: {
           args: true,
           msg: 'Please use the correct email format.',
         },
-        notEmpty: {
-          args: true,
-          msg: 'Email must not be empty.',
+        async isEmailUnique(value) {
+          const email = await User.findOne({
+            where: {
+              email: value,
+            },
+          });
+          if (email) {
+            throw new Error('Email must be unique.');
+          }
         },
       },
     },
@@ -49,13 +69,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: {
-          args: [5],
-          msg: 'Password minimum length is 5 characters.' 
-        },
         notEmpty: {
           args: true,
           msg: 'Password must not be empty.'
+        },
+        len: {
+          args: [5],
+          msg: 'Password minimum length is 5 characters.' 
         },
       },
     },
@@ -64,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
-  User.beforeCreate((user, options) => {
+  User.beforeCreate(async (user, options) => {
     user.password = generate_bcrypt_hash(user.password);
     user.status = 'registered';
   });

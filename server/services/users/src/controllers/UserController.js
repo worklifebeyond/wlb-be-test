@@ -1,41 +1,29 @@
 const { User } = require('../models');
 const { compare_bcrypt_password } = require('../helpers/bcrypt');
-const { generate_jwt_token } = require('../helpers/jwt');
+const { generate_jwt_token, verify_jwt_token } = require('../helpers/jwt');
 const errorHandler = require('../helpers/errorHandler');
-
-// Mailgun API :
-const api_key = `${process.env.MAILGUN_API_KEY}`;
-const domain = `${process.env.MAILGUN_DOMAIN}`;
-const mailgun = require('mailgun-js')({
-  apiKey: api_key,
-  domain,
-});
+const sendEmail = require('../helpers/mailgun');
 
 class UserController {
   static async register(ctx) {
     const { username, email, password } = ctx.request.body;
     try {
       const new_user = await User.create({ username, email, password });
+      ctx.response.status = 201;
+      ctx.body = new_user;
 
-      // Send email with Mailgun API
-      const data = {
+      // Generate user verification token :
+      const verification_token = generate_jwt_token(new_user);
+
+      // Send email with Mailgun API :
+      const url = `http://localhost:3000/users/verify?token=${verification_token}`;
+      const email_data = {
         from: `Blog App <alf.tirta@gmail.com>`,
         to: `${new_user.email}`,
         subject: `Blog App - User Verification`,
-        text: `
-Here is the link to verify your account :
-(user verification link)`,
+        text: `Please click on this link to verify your account : ${url}`,
       };
-      mailgun.messages().send(data, (error, body) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(body);
-        }
-      });
-
-      ctx.response.status = 201;
-      ctx.body = new_user;
+      sendEmail(email_data);
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
@@ -44,30 +32,32 @@ Here is the link to verify your account :
   }
 
   static async verify(ctx) {
-    const { username, email, password } = ctx.request.query;
+    const { token } = ctx.request.query;
     try {
-      const user = await User.findOne({ where: { username, email }});
-      if (!user) {
-        ctx.throw('The user verification link is invalid.');
-      } else {
-        const password_matched = compare_bcrypt_password(password, user.password);
-        if (!password_matched) {
-          ctx.throw('The user verification link is invalid.');
-        } else {
-          const user_activated = await User.update({
-            status: 'active',
-          }, {
-            where: {
-              username,
-              email,
-              password: user.password,
-            },
-            returning: true,
-          });
-          ctx.response.status = 200;
-          ctx.body = user_activated[1][0];
+      const decoded_user_data = verify_jwt_token(token);
+      const user = await User.findOne({
+        where: {
+          username: decoded_user_data.username,
+          email: decoded_user_data.email,
+          status: decoded_user_data.status,
         }
+      });
+      if (!user) {
+        throw new Error('The verification link is broken.');
       }
+      if (user.status === 'active') {
+        throw new Error('The user has already been verified.');
+      }
+      const user_activated = await User.update({
+        status: 'active',
+      }, {
+        where: {
+          id: user.id,
+        },
+        returning: true,
+      });
+      ctx.response.status = 200;
+      ctx.body = 'User Verification Success';
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;

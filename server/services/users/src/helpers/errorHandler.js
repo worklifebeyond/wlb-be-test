@@ -1,6 +1,6 @@
 function errorHandler(err) {
   const errors = [];
-  let status;
+  let status = 400;
   console.log(err.name);
   console.log(err.message);
   switch(err.name) {
@@ -8,11 +8,12 @@ function errorHandler(err) {
       err.errors.forEach(error => {
         errors.push(error.message);
       });
-      status = 400;
       break;
     case 'InternalServerError' :
       errors.push(err.message);
-      status = 400;
+      break;
+    case 'Error' :
+      errors.push(err.message);
       break;
     default :
       errors.push('Internal Server Error');

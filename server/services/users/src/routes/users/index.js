@@ -2,7 +2,7 @@ const Controller = require('../../controllers/UserController');
 
 function usersRoute(router) {
   router.post('/users/register', Controller.register);
-  router.put('/users/verify', Controller.verify);
+  router.get('/users/verify', Controller.verify);
   // router.post('/users/login', Controller.login);
 };
 

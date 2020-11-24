@@ -12,7 +12,7 @@ Its Users service has :
 ## Endpoints
 ```
  - POST /users/register
- - PUT  /users/verify?username=<user's name>&email=<user's email>&password=<user's password>
+ - GET  /users/verify
  - POST /users/login
  
  - POST   /posts
