@@ -1,5 +1,6 @@
 const { Like, Post, User } = require('../models');
 const errorHandler = require('../helpers/errorHandler');
+const sendEmail = require('../helpers/mailgun');
 
 class LikeController {
   static async create(ctx) {
@@ -13,13 +14,22 @@ class LikeController {
         where: { PostId, UserId }
       });
       if (!like) {
-        const post = await Post.findByPk(PostId);
+        const post = await Post.findByPk(PostId, { include: [User] });
         if (!post) {
           throw new Error('The post does not exist.');
         } else {
           const like = await Like.create({ PostId, UserId });
           ctx.response.status = 201;
           ctx.response.body = like;
+
+          // Send email with Mailgun API :
+          const email_data = {
+            from: `Blog App Team <alf.tirta@gmail.com>`,
+            to: `${post.User.email}`,
+            subject: `Blog App - Notification`,
+            text: `Hello, ${post.User.username}. Someone just liked your post entitled ${post.title}.`,
+          };
+          sendEmail(email_data);
         }
       } else {
         throw new Error('You cannot give more than one like for the same post.');

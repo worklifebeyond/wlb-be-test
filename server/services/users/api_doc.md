@@ -1,4 +1,4 @@
-# Blog App - Users Service
+# Blog App - Users Service API
 Blog App is an application to manage your blog. It has two services : Users & Logs.
 
 Its Users service has :

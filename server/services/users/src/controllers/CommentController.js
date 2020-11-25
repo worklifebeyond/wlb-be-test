@@ -1,5 +1,6 @@
 const { Comment, Post, User } = require('../models');
 const errorHandler = require('../helpers/errorHandler');
+const sendEmail = require('../helpers/mailgun');
 
 class CommentController {
   static async create(ctx) {
@@ -12,13 +13,22 @@ class CommentController {
     }
     const { content, PostId } = ctx.request.body;
     try {
-      const post = await Post.findByPk(PostId);
+      const post = await Post.findByPk(PostId, { include: [User] });
       if (!post && content && PostId) {
         throw new Error('The post does not exist.');
       } else {
         const comment = await Comment.create({ content, PostId, UserId });
         ctx.response.status = 201;
         ctx.response.body = comment;
+
+        // Send email with Mailgun API :
+        const email_data = {
+          from: `Blog App Team <alf.tirta@gmail.com>`,
+          to: `${post.User.email}`,
+          subject: `Blog App - Notification`,
+          text: `Hello, ${post.User.username}. Someone just commented on your post entitled ${post.title}.`,
+        };
+        sendEmail(email_data);
       }
     } catch(err) {
       const { status, errors } = errorHandler(err);

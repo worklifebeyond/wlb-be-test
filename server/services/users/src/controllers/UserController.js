@@ -18,7 +18,7 @@ class UserController {
       // Send email with Mailgun API :
       const url = `http://localhost:3000/users/verify?token=${verification_token}`;
       const email_data = {
-        from: `Blog App <alf.tirta@gmail.com>`,
+        from: `Blog App Team <alf.tirta@gmail.com>`,
         to: `${new_user.email}`,
         subject: `Blog App - User Verification`,
         text: `Please click on this link to verify your account : ${url}`,
