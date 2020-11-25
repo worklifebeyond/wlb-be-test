@@ -88,7 +88,10 @@ class PostController {
       const deleted_post = await Post.findByPk(id);
       await Post.destroy({ where: { id } });
       ctx.response.status = 200;
-      ctx.body = deleted_post;
+      ctx.body = {
+        message: 'Delete Success',
+        deleted_post,
+      };
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;

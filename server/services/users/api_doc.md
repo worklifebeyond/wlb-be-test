@@ -495,12 +495,129 @@ not needed
 _Response (200 - OK)_
 ```
 {
-  "id": <post id>,
-  "title": "<post title>",
-  "content": "<post content>",
+  "message": "Delete Success",
+  "deleted_post": {
+    "id": <post id>,
+    "title": "<post title>",
+    "content": "<post content>",
+    "UserId": <user's id>,
+    "createdAt": "<the time when the post was created>",
+    "updatedAt": "<the time when the post was updated>"
+  }
+}
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
+### POST /likes
+
+> Give a like to a blog post
+
+_Request Header_
+```
+{
+  "access_token": "<user's access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "PostId": <post id>
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": 1,
+  "PostId": "<post id>",
   "UserId": <user's id>,
-  "createdAt": "<the time when the post was created>",
-  "updatedAt": "<the time when the post was updated>"
+  "createdAt": "<the time when the like was created>",
+  "updatedAt": "<the time when the like was updated>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
+### DELETE /likes/:id
+
+> Delete a like by its id
+
+_Request Header_
+```
+{
+  "access_token": "<user's access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+  "message": "Delete Success",
+  "deleted_like": {
+    "id": <like id>,
+    "PostId": "<post id>",
+    "UserId": <user's id>,
+    "createdAt": "<the time when the like was created>",
+    "updatedAt": "<the time when the like was updated>"
+  }
 }
 ```
 

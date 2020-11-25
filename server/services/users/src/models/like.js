@@ -16,7 +16,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Like.init({
-    PostId: DataTypes.INTEGER,
+    PostId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'PostId must not be null.',
+        },
+      },
+    },
     UserId: DataTypes.INTEGER,
   }, {
     sequelize,
