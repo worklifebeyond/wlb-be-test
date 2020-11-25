@@ -1,4 +1,4 @@
-const { User, Post, Like } = require('../models');
+const { User, Post, Like, Comment, SubComment } = require('../models');
 const { verify_jwt_token } = require('../helpers/jwt');
 const errorHandler = require('../helpers/errorHandler');
 
@@ -40,7 +40,27 @@ async function authorization_like(ctx, next) {
   }
 }
 
+// authorization check before deleting a comment :
+async function authorization_comment(ctx, next) {
+  const id = ctx.request.params.id;
+  try {
+    const comment = await Comment.findByPk(id);
+    if (comment && comment.UserId === ctx.user.id) {
+      await next();
+    } else if (!comment) {
+      throw new Error('The comment does not exist.');
+    } else {
+      throw new Error('The user is not authorized.');
+    }
+  } catch(err) {
+    const { status, errors } = errorHandler(err);
+    ctx.response.status = status;
+    ctx.body = errors;
+  }
+}
+
 module.exports = {
   authorization_post,
   authorization_like,
+  authorization_comment,
 };
