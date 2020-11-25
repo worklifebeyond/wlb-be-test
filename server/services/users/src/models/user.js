@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
+        notNull: {
+          args: true,
+          msg: 'Username must not be null.'
+        },
         notEmpty: {
           args: true,
           msg: 'Username must not be empty.',
@@ -45,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
+        notNull: {
+          args: true,
+          msg: 'Email must not be null.'
+        },
         notEmpty: {
           args: true,
           msg: 'Email must not be empty.',
@@ -69,6 +77,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: 'Password must not be null.'
+        },
         notEmpty: {
           args: true,
           msg: 'Password must not be empty.'

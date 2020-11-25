@@ -61,6 +61,12 @@ class PostController {
 
   static async update(ctx) {
     const id = +ctx.request.params.id;
+    if (ctx.request.body.title === undefined) {
+      ctx.request.body.title = null;
+    }
+    if (ctx.request.body.content === undefined) {
+      ctx.request.body.content = null;
+    }
     const { title, content } = ctx.request.body;
     try {
       const updated_post = await Post.update({ title, content },{

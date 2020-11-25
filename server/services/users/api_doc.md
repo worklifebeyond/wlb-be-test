@@ -194,6 +194,16 @@ _Response (201 - Created)_
 }
 ```
 
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
 _Response (401 - Unauthorized)_
 ```
 [
@@ -247,6 +257,16 @@ _Response (200 - OK)_
     "Comments": [array of post comments]
   },
   ...
+]
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
 ]
 ```
 
@@ -304,6 +324,15 @@ _Response (200 - OK)_
 }
 ```
 
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
 
 _Response (401 - Unauthorized)_
 ```
@@ -361,6 +390,15 @@ _Response (200 - OK)_
 ]
 ```
 
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
 
 _Response (401 - Unauthorized)_
 ```
@@ -407,6 +445,15 @@ _Response (200 - OK)_
 }
 ```
 
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
 
 _Response (401 - Unauthorized)_
 ```
@@ -414,7 +461,6 @@ _Response (401 - Unauthorized)_
   "The user is not authenticated."
 ]
 ```
-
 
 _Response (500 - Internal Server Error)_
 ```
@@ -451,6 +497,15 @@ _Response (200 - OK)_
 }
 ```
 
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
 
 _Response (401 - Unauthorized)_
 ```
@@ -458,7 +513,6 @@ _Response (401 - Unauthorized)_
   "The user is not authenticated."
 ]
 ```
-
 
 _Response (500 - Internal Server Error)_
 ```
