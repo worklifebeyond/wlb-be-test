@@ -6,10 +6,9 @@ async function authentication(ctx, next) {
   const { access_token } = ctx.request.header;
   try {
     const decoded_user_data = verify_jwt_token(access_token);
+    const { id, username, email, status } = decoded_user_data;
     const user = await User.findOne({
-      where: {
-        email: decoded_user_data.email,
-      }
+      where: { id, username, email, status },
     });
     if (!user) {
       throw new Error('The user is not authenticated.');

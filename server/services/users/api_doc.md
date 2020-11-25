@@ -462,6 +462,13 @@ _Response (401 - Unauthorized)_
 ]
 ```
 
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
 _Response (500 - Internal Server Error)_
 ```
 [
@@ -511,6 +518,13 @@ _Response (401 - Unauthorized)_
 ```
 [
   "The user is not authenticated."
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
 ]
 ```
 

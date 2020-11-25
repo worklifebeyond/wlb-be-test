@@ -18,6 +18,9 @@ function errorHandler(err) {
       if (err.message === 'The user is not authenticated.') {
         status = 401;
       }
+      if (err.message === 'The user is not authorized.') {
+        status = 403;
+      }
       break;
     default :
       errors.push('Internal Server Error');
