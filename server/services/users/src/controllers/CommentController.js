@@ -26,7 +26,9 @@ class CommentController {
           from: `Blog App Team <alf.tirta@gmail.com>`,
           to: `${post.User.email}`,
           subject: `Blog App - Notification`,
-          text: `Hello, ${post.User.username}. Someone just commented on your post entitled ${post.title}.`,
+          text: `Hello, ${post.User.username}.
+
+Someone just commented "${comment.content}" on your post entitled "${post.title}".`,
         };
         sendEmail(email_data);
       }
