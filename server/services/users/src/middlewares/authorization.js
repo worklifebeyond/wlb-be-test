@@ -17,7 +17,7 @@ async function authorization_post(ctx, next) {
   } catch(err) {
     const { status, errors } = errorHandler(err);
     ctx.response.status = status;
-    ctx.body = errors;
+    ctx.response.body = errors;
   }
 }
 
@@ -36,7 +36,7 @@ async function authorization_like(ctx, next) {
   } catch(err) {
     const { status, errors } = errorHandler(err);
     ctx.response.status = status;
-    ctx.body = errors;
+    ctx.response.body = errors;
   }
 }
 
@@ -55,7 +55,7 @@ async function authorization_comment(ctx, next) {
   } catch(err) {
     const { status, errors } = errorHandler(err);
     ctx.response.status = status;
-    ctx.body = errors;
+    ctx.response.body = errors;
   }
 }
 

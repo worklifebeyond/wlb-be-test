@@ -224,9 +224,7 @@ _Response (500 - Internal Server Error)_
 
 _Request Header_
 ```
-{
-  "access_token": "<user's access token>"
-}
+not needed
 ```
 
 _Request Body_
@@ -291,9 +289,7 @@ _Response (500 - Internal Server Error)_
 
 _Request Header_
 ```
-{
-  "access_token": "<user's access token>"
-}
+not needed
 ```
 
 _Request Body_
@@ -354,9 +350,7 @@ _Response (500 - Internal Server Error)_
 
 _Request Header_
 ```
-{
-  "access_token": "<user's access token>"
-}
+not needed
 ```
 
 _Request Body_
@@ -538,9 +532,9 @@ _Response (500 - Internal Server Error)_
 ]
 ```
 ---
-### POST /likes
+### POST /comments
 
-> Give a like to a blog post
+> Give a comment to a blog post
 
 _Request Header_
 ```
@@ -552,6 +546,7 @@ _Request Header_
 _Request Body_
 ```
 {
+  "content": "<user's comment>",
   "PostId": <post id>
 }
 ```
@@ -559,7 +554,8 @@ _Request Body_
 _Response (201 - Created)_
 ```
 {
-  "id": 1,
+  "id": <comment id>,
+  "content": "<user's comment>",
   "PostId": "<post id>",
   "UserId": <user's id>,
   "createdAt": "<the time when the like was created>",
@@ -581,6 +577,135 @@ _Response (401 - Unauthorized)_
 ```
 [
   "The user is not authenticated."
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
+### DELETE /comments/:id
+
+> Delete a comment by its id
+
+_Request Header_
+```
+{
+  "access_token": "<user's access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+  "message": "Delete Success",
+  "deleted_comment": {
+    "id": <comment id>,
+    "content": "<user's comment>",
+    "PostId": "<post id>",
+    "UserId": <user's id>,
+    "createdAt": "<the time when the like was created>",
+    "updatedAt": "<the time when the like was updated>"
+  }
+}
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
+### POST /likes
+
+> Give a like to a blog post
+
+_Request Header_
+```
+{
+  "access_token": "<user's access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "PostId": <post id>
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": <like id>,
+  "PostId": "<post id>",
+  "UserId": <user's id>,
+  "createdAt": "<the time when the like was created>",
+  "updatedAt": "<the time when the like was updated>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
 ]
 ```
 

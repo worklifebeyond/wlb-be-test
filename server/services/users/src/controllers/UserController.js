@@ -10,7 +10,7 @@ class UserController {
     try {
       const new_user = await User.create({ username, email, password });
       ctx.response.status = 201;
-      ctx.body = new_user;
+      ctx.response.body = new_user;
 
       // Generate user verification token :
       const verification_token = generate_jwt_token(new_user);
@@ -27,7 +27,7 @@ class UserController {
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
-      ctx.body = errors;
+      ctx.response.body = errors;
     }
   }
 
@@ -53,12 +53,12 @@ class UserController {
           returning: true,
         });
         ctx.response.status = 200;
-        ctx.body = { message: 'User Verification Success' };
+        ctx.response.body = { message: 'User Verification Success' };
       }
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
-      ctx.body = errors;
+      ctx.response.body = errors;
     }
   }
 
@@ -79,13 +79,13 @@ class UserController {
         } else {
           const access_token = generate_jwt_token(user);
           ctx.response.status = 200;
-          ctx.body = { access_token, user_id: user.id };
+          ctx.response.body = { access_token, user_id: user.id };
         }
       }
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
-      ctx.body = errors;
+      ctx.response.body = errors;
     }
   }
 }

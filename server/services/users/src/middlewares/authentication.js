@@ -18,7 +18,7 @@ async function authentication(ctx, next) {
   } catch(err) {
     const { status, errors } = errorHandler(err);
     ctx.response.status = status;
-    ctx.body = errors;
+    ctx.response.body = errors;
   }
 }
 
