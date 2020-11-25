@@ -4,7 +4,7 @@ const errorHandler = require('../helpers/errorHandler');
 
 // authorization check before updating or deletinga post :
 async function authorization_post(ctx, next) {
-  const id = ctx.request.params.id;
+  const id = +ctx.request.params.id;
   try {
     const post = await Post.findByPk(id);
     if (post && post.UserId === ctx.user.id) {
@@ -23,7 +23,7 @@ async function authorization_post(ctx, next) {
 
 // authorization check before deleting a like :
 async function authorization_like(ctx, next) {
-  const id = ctx.request.params.id;
+  const id = +ctx.request.params.id;
   try {
     const like = await Like.findByPk(id);
     if (like && like.UserId === ctx.user.id) {
@@ -42,7 +42,7 @@ async function authorization_like(ctx, next) {
 
 // authorization check before deleting a comment :
 async function authorization_comment(ctx, next) {
-  const id = ctx.request.params.id;
+  const id = +ctx.request.params.id;
   try {
     const comment = await Comment.findByPk(id);
     if (comment && comment.UserId === ctx.user.id) {
@@ -59,8 +59,28 @@ async function authorization_comment(ctx, next) {
   }
 }
 
+// authorization check before deleting a sub comment :
+async function authorization_sub_comment(ctx, next) {
+  const id = +ctx.request.params.id; console.log({id});
+  try {
+    const sub_comment = await SubComment.findByPk(id);
+    if (sub_comment && sub_comment.UserId === ctx.user.id) {
+      await next();
+    } else if (!sub_comment) {
+      throw new Error('The sub comment does not exist.');
+    } else {
+      throw new Error('The user is not authorized.');
+    }
+  } catch(err) {
+    const { status, errors } = errorHandler(err);
+    ctx.response.status = status;
+    ctx.response.body = errors;
+  }
+}
+
 module.exports = {
   authorization_post,
   authorization_like,
   authorization_comment,
+  authorization_sub_comment,
 };

@@ -1,4 +1,4 @@
-const { Post, User, Like, Comment } = require('../models');
+const { Post, User, Like, Comment, SubComment } = require('../models');
 const errorHandler = require('../helpers/errorHandler');
 
 class PostController {
@@ -24,7 +24,17 @@ class PostController {
 
   static async read(ctx) {
     try {
-      const all_posts = await Post.findAll({ include: [User, Like, Comment] });
+      const all_posts = await Post.findAll({
+        include: [{
+          model: User,
+        },
+        {
+          model: Like,
+        },{
+          model: Comment,
+          include: [SubComment],
+        }],
+      });
       ctx.response.status = 200;
       ctx.response.body = all_posts;
     } catch(err) {
@@ -38,7 +48,15 @@ class PostController {
     const id = +ctx.request.params.id;
     try {
       const posts = await Post.findByPk(id, {
-        include: [User, Like, Comment],
+        include: [{
+          model: User,
+        },
+        {
+          model: Like,
+        },{
+          model: Comment,
+          include: [SubComment],
+        }],
       });
       ctx.response.status = 200;
       ctx.response.body = posts;
@@ -54,7 +72,15 @@ class PostController {
     try {
       const posts = await Post.findAll({
         where: { UserId: id },
-        include: [User, Like, Comment],
+        include: [{
+          model: User,
+        },
+        {
+          model: Like,
+        },{
+          model: Comment,
+          include: [SubComment],
+        }],
       });
       ctx.response.status = 200;
       ctx.response.body = posts;

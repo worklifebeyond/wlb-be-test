@@ -16,8 +16,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   SubComment.init({
-    content: DataTypes.STRING,
-    CommentId: DataTypes.INTEGER,
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Content must not be null.',
+        },
+        notEmpty: {
+          args: true,
+          msg: 'Content must not be empty.',
+        },
+      },
+    },
+    CommentId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'CommentId must not be null.',
+        },
+      },
+    },
     UserId: DataTypes.INTEGER,
   }, {
     sequelize,

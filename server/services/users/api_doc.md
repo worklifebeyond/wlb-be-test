@@ -251,8 +251,38 @@ _Response (200 - OK)_
       "createdAt": "<the time when the user was created>",
       "updatedAt": "<the time when the user was updated>"
     },
-    "Likes": [array of post likes],
-    "Comments": [array of post comments]
+    "Likes": [
+      {
+        "id": <like id>,
+        "PostId": <post id>,
+        "UserId": <user's id>,
+        "createdAt": "<the time when the like was created>",
+        "updatedAt": "<the time when the like was updated>"
+      },
+      ...
+    ],
+    "Comments": [
+      {
+        "id": <comment id>,
+        "content": "<user's comment>",
+        "PostId": <post id>,
+        "UserId": <user's id>,
+        "createdAt": "<the time when the comment was created>",
+        "updatedAt": "<the time when the comment was updated>",
+        "SubComments": [
+          {
+            "id": <sub comment id>,
+            "content": "<user's sub comment>",
+            "CommentId": <comment id>,
+            "UserId": <user's id>,
+            "createdAt": "<the time when the sub comment was created>",
+            "updatedAt": "<the time when the sub comment was updated>"
+          },
+          ...
+        ]
+      },
+      ...
+    ]
   },
   ...
 ]
@@ -315,8 +345,38 @@ _Response (200 - OK)_
     "createdAt": "<the time when the user was created>",
     "updatedAt": "<the time when the user was updated>"
   },
-  "Likes": [array of post likes],
-  "Comments": [array of post comments]
+  "Likes": [
+    {
+      "id": <like id>,
+      "PostId": <post id>,
+      "UserId": <user's id>,
+      "createdAt": "<the time when the like was created>",
+      "updatedAt": "<the time when the like was updated>"
+    },
+    ...
+  ],
+  "Comments": [
+    {
+      "id": <comment id>,
+      "content": "<user's comment>",
+      "PostId": <post id>,
+      "UserId": <user's id>,
+      "createdAt": "<the time when the comment was created>",
+      "updatedAt": "<the time when the comment was updated>",
+      "SubComments": [
+        {
+          "id": <sub comment id>,
+          "content": "<user's sub comment>",
+          "CommentId": <comment id>,
+          "UserId": <user's id>,
+          "createdAt": "<the time when the sub comment was created>",
+          "updatedAt": "<the time when the sub comment was updated>"
+        },
+        ...
+      ]
+    },
+    ...
+  ]
 }
 ```
 
@@ -377,8 +437,38 @@ _Response (200 - OK)_
       "createdAt": "<the time when the user was created>",
       "updatedAt": "<the time when the user was updated>"
     },
-    "Likes": [array of post likes],
-    "Comments": [array of post comments]
+    "Likes": [
+      {
+        "id": <like id>,
+        "PostId": <post id>,
+        "UserId": <user's id>,
+        "createdAt": "<the time when the like was created>",
+        "updatedAt": "<the time when the like was updated>"
+      },
+      ...
+    ],
+    "Comments": [
+      {
+        "id": <comment id>,
+        "content": "<user's comment>",
+        "PostId": <post id>,
+        "UserId": <user's id>,
+        "createdAt": "<the time when the comment was created>",
+        "updatedAt": "<the time when the comment was updated>",
+        "SubComments": [
+          {
+            "id": <sub comment id>,
+            "content": "<user's sub comment>",
+            "CommentId": <comment id>,
+            "UserId": <user's id>,
+            "createdAt": "<the time when the sub comment was created>",
+            "updatedAt": "<the time when the sub comment was updated>"
+          },
+          ...
+        ]
+      },
+      ...
+    ]
   },
   ...
 ]
@@ -534,7 +624,7 @@ _Response (500 - Internal Server Error)_
 ---
 ### POST /comments
 
-> Give a comment to a blog post
+> Write a comment to a blog post
 
 _Request Header_
 ```
@@ -618,6 +708,130 @@ _Response (200 - OK)_
     "id": <comment id>,
     "content": "<user's comment>",
     "PostId": "<post id>",
+    "UserId": <user's id>,
+    "createdAt": "<the time when the like was created>",
+    "updatedAt": "<the time when the like was updated>"
+  }
+}
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
+### POST /sub-comments
+
+> Write a sub comment to a comment in a blog post
+
+_Request Header_
+```
+{
+  "access_token": "<user's access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "content": "<user's sub comment>",
+  "CommentId": <comment id>
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": <sub comment id>,
+  "content": "<user's sub comment>",
+  "CommentId": "<comment id>",
+  "UserId": <user's id>,
+  "createdAt": "<the time when the like was created>",
+  "updatedAt": "<the time when the like was updated>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
+
+_Response (403 - Forbidden)_
+```
+[
+  "The user is not authorized."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
+### DELETE /sub-comments/:id
+
+> Delete a comment by its id
+
+_Request Header_
+```
+{
+  "access_token": "<user's access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+  "message": "Delete Success",
+  "deleted_sub_comment": {
+    "id": <sub comment id>,
+    "content": "<user's sub comment>",
+    "CommentId": "<comment id>",
     "UserId": <user's id>,
     "createdAt": "<the time when the like was created>",
     "updatedAt": "<the time when the like was updated>"

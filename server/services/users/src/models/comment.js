@@ -36,10 +36,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
-          notNull: {
-            args: true,
-            msg: 'PostId must not be null.',
-          },
+          args: true,
+          msg: 'PostId must not be null.',
         },
       },
     },
