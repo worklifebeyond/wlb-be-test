@@ -17,6 +17,7 @@ Its Users service has :
  
  - POST   /posts
  - GET    /posts
+ - GET    /posts/search?title=<search_by_title>&sort=<option_1,option_2,...,option_n>&order=<asc_or_desc>
  - GET    /posts/:id
  - GET    /posts/user/:id
  - PUT    /posts/:id
@@ -305,6 +306,117 @@ _Response (401 - Unauthorized)_
 ]
 ```
 
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
+### GET /posts/search?title=<search_by_title>&sort=<option_1,option_2,...,option_n>&order=<asc_or_desc>
+
+> Get blog posts with filter options
+>
+> This feature supports multiple sort options with hierarchical order of importance. The first sort option is the most important, and the last sort option is the least important.
+>
+> Available sort options : 
+>
+> * 'date' : to sort by the date upon the creation of the post
+> * 'user' : to sort by the username of the post owner
+> * 'most_comments' : to sort by the total comments each post has
+> * 'most_likes' : to sort by the total likes each post has
+>
+> Available order options :
+>
+> * 'asc' : ascending order to all sort options
+> * 'desc' : descending order to all sort options
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+  "count": <total search results>,
+  "data": [
+    {
+      "id": <post id>,
+      "title": "<post title>",
+      "content": "<post content>",
+      "UserId": <user's id>,
+      "createdAt": "<the time when the post was created>",
+      "updatedAt": "<the time when the post was updated>",
+      "User": {
+        "id": <user's id>,
+        "username": "<user's name>",
+        "email": "<user's email>",
+        "password": "<user's hashed password>",
+        "status": "<user's account status>",
+        "createdAt": "<the time when the user was created>",
+        "updatedAt": "<the time when the user was updated>"
+      },
+      "Likes": [
+        {
+          "id": <like id>,
+          "PostId": <post id>,
+          "UserId": <user's id>,
+          "createdAt": "<the time when the like was created>",
+          "updatedAt": "<the time when the like was updated>"
+        },
+        ...
+      ],
+      "Comments": [
+        {
+          "id": <comment id>,
+          "content": "<user's comment>",
+          "PostId": <post id>,
+          "UserId": <user's id>,
+          "createdAt": "<the time when the comment was created>",
+          "updatedAt": "<the time when the comment was updated>",
+          "SubComments": [
+            {
+              "id": <sub comment id>,
+              "content": "<user's sub comment>",
+              "CommentId": <comment id>,
+              "UserId": <user's id>,
+              "createdAt": "<the time when the sub comment was created>",
+              "updatedAt": "<the time when the sub comment was updated>"
+            },
+            ...
+          ]
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+}
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message 1>",
+  "<error message 2>",
+  ...,
+  "<error message n>"
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
 
 _Response (500 - Internal Server Error)_
 ```

@@ -6,6 +6,7 @@ function postsRoute(router) {
   router
     .post('/posts', authentication, Controller.create)
     .get('/posts', Controller.read)
+    .get('/posts/search', Controller.search)
     .get('/posts/:id', Controller.findByPostId)
     .get('/posts/user/:id', Controller.findByUserId)
     .put('/posts/:id', authentication, authorization_post, Controller.update)

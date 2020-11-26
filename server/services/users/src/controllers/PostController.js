@@ -1,5 +1,7 @@
 const { Post, User, Like, Comment, SubComment } = require('../models');
+const { Op } = require('sequelize');
 const errorHandler = require('../helpers/errorHandler');
+const filterPost = require('../helpers/filterPost');
 
 class PostController {
   static async create(ctx) {
@@ -85,6 +87,37 @@ class PostController {
       ctx.response.status = 200;
       ctx.response.body = posts;
     } catch(err) {
+      const { status, errors } = errorHandler(err);
+      ctx.response.status = status;
+      ctx.response.body = errors;
+    }
+  }
+
+  static async search(ctx) {
+    const { title, sort, order } = ctx.request.query;
+    const sort_array = sort.split(',');
+    const sort_order = filterPost(sort_array, order);
+    try {
+      const { count, rows: data } = await Post.findAndCountAll({
+        where: {
+          title: {
+            [Op.iRegexp]: `${title}`,
+          },
+        },
+        order: sort_order,
+        include: [{
+          model: User,
+        },
+        {
+          model: Like,
+        },{
+          model: Comment,
+          include: [SubComment],
+        }],
+      });
+      ctx.response.status = 200;
+      ctx.response.body = { count, data };
+    } catch(err) { console.log(err);
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
       ctx.response.body = errors;

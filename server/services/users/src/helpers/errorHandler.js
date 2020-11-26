@@ -7,7 +7,13 @@ function errorHandler(err) {
         errors.push(error.message);
       });
       break;
+    case 'SequelizeDatabaseError' :
+      errors.push(err.message);
+      break;
     case 'JsonWebTokenError' :
+      errors.push(err.message);
+      break;
+    case 'TypeError' :
       errors.push(err.message);
       break;
     case 'InternalServerError' :
