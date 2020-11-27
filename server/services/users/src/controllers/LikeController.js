@@ -50,7 +50,7 @@ Someone just liked your post entitled "${post.title}".`,
       await Like.destroy({ where: { id } });
       ctx.response.status = 200;
       ctx.response.body = {
-        message: 'Delete Success',
+        message: 'Delete Like Success',
         deleted_like,
       };
     } catch(err) {

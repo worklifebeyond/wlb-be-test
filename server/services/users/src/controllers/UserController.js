@@ -16,7 +16,7 @@ class UserController {
       const verification_token = generate_jwt_token(new_user);
 
       // Send email with Mailgun API :
-      const url = `http://localhost:3000/users/verify?token=${verification_token}`;
+      const url = `http://localhost:3001/users/verify?token=${verification_token}`;
       const email_data = {
         from: `Blog App Team <alf.tirta@gmail.com>`,
         to: `${new_user.email}`,

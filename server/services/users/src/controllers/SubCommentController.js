@@ -46,7 +46,7 @@ Someone just commented "${sub_comment.content}" on your comment "${comment.conte
       await SubComment.destroy({ where: { id }});
       ctx.response.status = 200;
       ctx.response.body = {
-        message: 'Delete Success',
+        message: 'Delete Sub Comment Success',
         deleted_sub_comment,
       };
     } catch(err) {

@@ -46,7 +46,7 @@ Someone just commented "${comment.content}" on your post entitled "${post.title}
       await Comment.destroy({ where: { id }});
       ctx.response.status = 200;
       ctx.response.body = {
-        message: 'Delete Success',
+        message: 'Delete Comment Success',
         deleted_comment,
       };
     } catch(err) {

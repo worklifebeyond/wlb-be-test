@@ -154,7 +154,7 @@ class PostController {
       await Post.destroy({ where: { id } });
       ctx.response.status = 200;
       ctx.response.body = {
-        message: 'Delete Success',
+        message: 'Delete Post Success',
         deleted_post,
       };
     } catch(err) {

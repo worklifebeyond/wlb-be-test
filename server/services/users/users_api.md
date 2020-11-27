@@ -1,7 +1,9 @@
 # Blog App - Users Service API
 Blog App is an application to manage your blog. It has two services : Users & Logs.
 
-Its Users service has :
+This document explains the Users services.
+
+The Users service has :
 
 * RESTful endpoints for user registration, verification, and login.
 * RESTful endpoints for CRUD operations of blog posts, likes, comments, and sub comments.
@@ -186,7 +188,7 @@ _Request Body_
 _Response (201 - Created)_
 ```
 {
-  "id": 1,
+  "id": <post id>,
   "title": "<post title>",
   "content": "<post content>",
   "UserId": <user's id>,
@@ -305,7 +307,6 @@ _Response (401 - Unauthorized)_
   "The user is not authenticated."
 ]
 ```
-
 
 _Response (500 - Internal Server Error)_
 ```
@@ -691,7 +692,7 @@ not needed
 _Response (200 - OK)_
 ```
 {
-  "message": "Delete Success",
+  "message": "Delete Post Success",
   "deleted_post": {
     "id": <post id>,
     "title": "<post title>",
@@ -815,7 +816,7 @@ not needed
 _Response (200 - OK)_
 ```
 {
-  "message": "Delete Success",
+  "message": "Delete Comment Success",
   "deleted_comment": {
     "id": <comment id>,
     "content": "<user's comment>",
@@ -939,7 +940,7 @@ not needed
 _Response (200 - OK)_
 ```
 {
-  "message": "Delete Success",
+  "message": "Delete Sub Comment Success",
   "deleted_sub_comment": {
     "id": <sub comment id>,
     "content": "<user's sub comment>",
@@ -1061,7 +1062,7 @@ not needed
 _Response (200 - OK)_
 ```
 {
-  "message": "Delete Success",
+  "message": "Delete Like Success",
   "deleted_like": {
     "id": <like id>,
     "PostId": "<post id>",
