@@ -138,7 +138,7 @@ _Response (200 - OK)_
     "_id": "<log id>"
     "path": "<api path>",
     "user_detail": {user detail object},
-    "api_access_time": <api access time in milliseconds>,
+    "api_access_time": <api access time in seconds>,
     "request_object": {api request object},
     "response_object": {api response object},
     "createdAt": "<the time when the log was created>",
