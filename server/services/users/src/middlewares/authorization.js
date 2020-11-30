@@ -1,9 +1,11 @@
 const { User, Post, Like, Comment, SubComment } = require('../models');
 const { verify_jwt_token } = require('../helpers/jwt');
 const errorHandler = require('../helpers/errorHandler');
+const log = require('../helpers/logger');
 
 // authorization check before updating or deletinga post :
 async function authorization_post(ctx, next) {
+  const start_time = Date.now();
   const id = +ctx.request.params.id;
   try {
     const post = await Post.findByPk(id);
@@ -18,11 +20,19 @@ async function authorization_post(ctx, next) {
     const { status, errors } = errorHandler(err);
     ctx.response.status = status;
     ctx.response.body = errors;
+    log(
+      `${ctx.request.host}${ctx.request.url}`,
+      ctx.request.header.access_token,
+      start_time,
+      ctx.request,
+      ctx.response,
+    );
   }
 }
 
 // authorization check before deleting a like :
 async function authorization_like(ctx, next) {
+  const start_time = Date.now();
   const id = +ctx.request.params.id;
   try {
     const like = await Like.findByPk(id);
@@ -37,11 +47,19 @@ async function authorization_like(ctx, next) {
     const { status, errors } = errorHandler(err);
     ctx.response.status = status;
     ctx.response.body = errors;
+    log(
+      `${ctx.request.host}${ctx.request.url}`,
+      ctx.request.header.access_token,
+      start_time,
+      ctx.request,
+      ctx.response,
+    );
   }
 }
 
 // authorization check before deleting a comment :
 async function authorization_comment(ctx, next) {
+  const start_time = Date.now();
   const id = +ctx.request.params.id;
   try {
     const comment = await Comment.findByPk(id);
@@ -56,12 +74,20 @@ async function authorization_comment(ctx, next) {
     const { status, errors } = errorHandler(err);
     ctx.response.status = status;
     ctx.response.body = errors;
+    log(
+      `${ctx.request.host}${ctx.request.url}`,
+      ctx.request.header.access_token,
+      start_time,
+      ctx.request,
+      ctx.response,
+    );
   }
 }
 
 // authorization check before deleting a sub comment :
 async function authorization_sub_comment(ctx, next) {
-  const id = +ctx.request.params.id; console.log({id});
+  const start_time = Date.now();
+  const id = +ctx.request.params.id;
   try {
     const sub_comment = await SubComment.findByPk(id);
     if (sub_comment && sub_comment.UserId === ctx.user.id) {
@@ -75,6 +101,13 @@ async function authorization_sub_comment(ctx, next) {
     const { status, errors } = errorHandler(err);
     ctx.response.status = status;
     ctx.response.body = errors;
+    log(
+      `${ctx.request.host}${ctx.request.url}`,
+      ctx.request.header.access_token,
+      start_time,
+      ctx.request,
+      ctx.response,
+    );
   }
 }
 

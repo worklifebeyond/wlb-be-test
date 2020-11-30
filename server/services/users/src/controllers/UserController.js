@@ -3,17 +3,32 @@ const { compare_bcrypt_password } = require('../helpers/bcrypt');
 const { generate_jwt_token, verify_jwt_token } = require('../helpers/jwt');
 const errorHandler = require('../helpers/errorHandler');
 const sendEmail = require('../helpers/mailgun');
+const log = require('../helpers/logger');
 
 class UserController {
   static async register(ctx) {
+    const start_time = Date.now();
     const { username, email, password } = ctx.request.body;
     try {
       const new_user = await User.create({ username, email, password });
-      ctx.response.status = 201;
-      ctx.response.body = new_user;
 
       // Generate user verification token :
       const verification_token = generate_jwt_token(new_user);
+
+      // Response :
+      ctx.response.status = 201;
+      ctx.response.body = {
+        message: 'User Registration Success',
+        verification_token,
+        data: new_user,
+      };
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
 
       // Send email with Mailgun API :
       const url = `http://localhost:3001/users/verify?token=${verification_token}`;
@@ -28,10 +43,18 @@ class UserController {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
       ctx.response.body = errors;
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
     }
   }
 
   static async verify(ctx) {
+    const start_time = Date.now();
     const { token } = ctx.request.query;
     try {
       const decoded_user_data = verify_jwt_token(token);
@@ -42,7 +65,7 @@ class UserController {
         }
       });
 
-      // Validate the token :
+      // Validate the verification token :
       if (!user) {
         throw new Error('The verification link is invalid.');
       } else if (user.status === 'active') {
@@ -53,16 +76,34 @@ class UserController {
           returning: true,
         });
         ctx.response.status = 200;
-        ctx.response.body = { message: 'User Verification Success' };
+        ctx.response.body = {
+          message: 'User Verification Success',
+          data: user_activated[1][0],
+        };
+        log(
+          `${ctx.request.host}${ctx.request.url}`,
+          ctx.request.header.access_token,
+          start_time,
+          ctx.request,
+          ctx.response,
+        );
       }
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
       ctx.response.body = errors;
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
     }
   }
 
   static async login(ctx) {
+    const start_time = Date.now();
     const { email, password } = ctx.request.body;
     try {
       const user = await User.findOne({ where: { email }});
@@ -79,13 +120,31 @@ class UserController {
         } else {
           const access_token = generate_jwt_token(user);
           ctx.response.status = 200;
-          ctx.response.body = { access_token, user_id: user.id };
+          ctx.response.body = {
+            message: 'User Login Success',
+            access_token,
+            user_id: user.id,
+          };
+          log(
+            `${ctx.request.host}${ctx.request.url}`,
+            ctx.request.header.access_token,
+            start_time,
+            ctx.request,
+            ctx.response,
+          );
         }
       }
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
       ctx.response.body = errors;
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
     }
   }
 }

@@ -5,7 +5,7 @@ This document explains the Logs services.
 
 The Logs service has :
 
-* RESTful endpoints for CRUD operations of blog access logs.
+* RESTful endpoints for create, read, delete, and reset operations of blog access logs.
 * JSON formatted response.
 
 &nbsp;
@@ -33,7 +33,7 @@ _Request Body_
 {
   "path": "<api path>",
   "user_detail": {user detail object},
-  "api_access_time": <api access time in seconds>,
+  "api_access_time": <api access time in milliseconds>,
   "request_object": {api request object},
   "response_object": {api response object}
 }
@@ -57,10 +57,8 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -106,10 +104,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -155,10 +151,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -193,10 +187,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 

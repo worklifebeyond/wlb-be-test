@@ -1,9 +1,11 @@
 const { Like, Post, User } = require('../models');
 const errorHandler = require('../helpers/errorHandler');
 const sendEmail = require('../helpers/mailgun');
+const log = require('../helpers/logger');
 
 class LikeController {
   static async create(ctx) {
+    const start_time = Date.now();
     const UserId = ctx.user.id;
     if (ctx.request.body.PostId === undefined) {
       ctx.request.body.PostId = null;
@@ -21,6 +23,13 @@ class LikeController {
           const like = await Like.create({ PostId, UserId });
           ctx.response.status = 201;
           ctx.response.body = like;
+          log(
+            `${ctx.request.host}${ctx.request.url}`,
+            ctx.request.header.access_token,
+            start_time,
+            ctx.request,
+            ctx.response,
+          );
 
           // Send email with Mailgun API :
           const email_data = {
@@ -40,10 +49,18 @@ Someone just liked your post entitled "${post.title}".`,
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
       ctx.response.body = errors;
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
     }
   }
 
   static async delete(ctx) {
+    const start_time = Date.now();
     const id = +ctx.request.params.id;
     try {
       const deleted_like = await Like.findByPk(id);
@@ -53,10 +70,24 @@ Someone just liked your post entitled "${post.title}".`,
         message: 'Delete Like Success',
         deleted_like,
       };
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
     } catch(err) {
       const { status, errors } = errorHandler(err);
       ctx.response.status = status;
       ctx.response.body = errors;
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
     }
   }
 }

@@ -6,7 +6,8 @@ This document explains the Users services.
 The Users service has :
 
 * RESTful endpoints for user registration, verification, and login.
-* RESTful endpoints for CRUD operations of blog posts, likes, comments, and sub comments.
+* RESTful endpoints for CRUD, search, find-by-id, and find-by-user-id operations of blog posts.
+* RESTful endpoints for Create and Delete operations of likes, comments, and sub comments.
 * JSON formatted response.
 
 &nbsp;
@@ -57,23 +58,25 @@ _Request Body_
 _Response (201 - Created)_
 ```
 {
-  "id": <user's id>,
-  "username": "<user's name>",
-  "email": "<user's email>",
-  "password": "<user's password>",
-  "status": "registered",
-  "createdAt": "<the time when the user was created>",
-  "updatedAt": "<the time when the user was updated>"
+  "message": "User Registration Success",
+  "verification_token": "<account verification token>",
+  "data": {
+    "id": <user's id>,
+    "username": "<user's name>",
+    "email": "<user's email>",
+    "password": "<user's hashed password>",
+    "status": "registered",
+    "createdAt": "<the time when the user was created>",
+    "updatedAt": "<the time when the user was updated>"
+  }
 }
 ```
 
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -84,7 +87,7 @@ _Response (500 - Internal Server Error)_
 ]
 ```
 ---
-### GET /users/verify?token=<account_verification_token>
+### GET /users/verify?token=<verification_token>
 
 > Verify user
 
@@ -101,7 +104,16 @@ not needed
 _Response (200 - OK)_
 ```
 {
-  "message": "User Verification Success"
+  "message": "User Verification Success",
+  "data": {
+    "id": <user's id>,
+    "username": <"user's name">,
+    "email": "<user's email>",
+    "password": "<user's hashed password>",
+    "status": "active",
+    "createdAt": "<the time when the user was created>",
+    "updatedAt": "<the time when the user was updated>"
+  }
 }
 ```
 
@@ -143,6 +155,7 @@ _Request Body_
 _Response (200 - OK)_
 ```
 {
+  "message": "User Login Success",
   "access_token": "<user's access token>",
   "user_id": "<user's id>"
 }
@@ -200,10 +213,8 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -294,10 +305,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -405,10 +414,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -496,10 +503,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -590,10 +595,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -645,10 +648,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -707,10 +708,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -769,10 +768,8 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -831,10 +828,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -893,10 +888,8 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -955,10 +948,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -1015,10 +1006,8 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
@@ -1076,10 +1065,8 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 [
-  "<error message 1>",
-  "<error message 2>",
-  ...,
-  "<error message n>"
+  "<error message>",
+  ...
 ]
 ```
 
