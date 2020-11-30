@@ -14,47 +14,59 @@ async function login_user(_, user, { dataSources }) {
 
 // handle post features :
 async function create_post(_, { title, content, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.createPost({ title, content }, access_token);
 }
 async function update_post(_, { id, title, content, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.updatePost(id, { title, content }, access_token);
 }
 async function delete_post(_, { id, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.deletePost(id, access_token);
 }
 
 // handle like-unlike features :
 async function create_like(_, { PostId, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.createLike({ PostId }, access_token);
 }
 async function delete_like(_, { id, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.deleteLike(id, access_token);
 }
 
 // handle comment features :
 async function create_comment(_, { content, PostId, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.createComment({ content, PostId }, access_token);
 }
 async function delete_comment(_, { id, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.deleteComment(id, access_token);
 }
 
 // handle sub comment features :
 async function create_sub_comment(_, { content, CommentId, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.createSubComment({ content, CommentId }, access_token);
 }
 async function delete_sub_comment(_, { id, access_token }, { dataSources }) {
+  await redis.del('posts');
   return dataSources.usersAPI.deleteSubComment(id, access_token);
 }
 
 // handle log features :
 async function create_log(_, log, { dataSources }) {
+  await redis.del('logs');
   return dataSources.logsAPI.createLog(log);
 }
 async function delete_log(_, { id }, { dataSources }) {
+  await redis.del('logs');
   return dataSources.logsAPI.deleteLog(id);
 }
 async function reset_logs(_, __, { dataSources }) {
+  await redis.del('logs');
   return dataSources.logsAPI.resetLogs();
 }
 
