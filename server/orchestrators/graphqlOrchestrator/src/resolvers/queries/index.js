@@ -1,27 +1,36 @@
 const Redis = require('ioredis');
 const redis = new Redis();
+const env = process.env.NODE_ENV || 'development';
 
 // handle user query :
 async function users(_, { access_token }, { dataSources }) {
-  const cached_users = await redis.get('users');
-  if (cached_users) {
-    return JSON.parse(cached_users);
+  if (env === 'production') {
+    return dataSources.usersAPI.readUsers(access_token);
   } else {
-    const users = await dataSources.usersAPI.readUsers(access_token);
-    await redis.set('users', JSON.stringify(users));
-    return users;
+    const cached_users = await redis.get('users');
+    if (cached_users) {
+      return JSON.parse(cached_users);
+    } else {
+      const users = await dataSources.usersAPI.readUsers(access_token);
+      await redis.set('users', JSON.stringify(users));
+      return users;
+    }
   }
 }
 
 // handle post queries :
 async function posts(_, { access_token }, { dataSources }) {
-  const cached_posts = await redis.get('posts');
-  if (cached_posts) {
-    return JSON.parse(cached_posts);
+  if (env === 'production') {
+    return dataSources.usersAPI.readPosts(access_token);
   } else {
-    const posts = await dataSources.usersAPI.readPosts(access_token);
-    await redis.set('posts', JSON.stringify(posts));
-    return posts;
+    const cached_posts = await redis.get('posts');
+    if (cached_posts) {
+      return JSON.parse(cached_posts);
+    } else {
+      const posts = await dataSources.usersAPI.readPosts(access_token);
+      await redis.set('posts', JSON.stringify(posts));
+      return posts;
+    }
   }
 }
 async function search_posts(_, { title, sort, order, access_token }, { dataSources }) {

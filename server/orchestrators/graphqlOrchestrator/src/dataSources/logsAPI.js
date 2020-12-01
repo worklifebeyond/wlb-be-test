@@ -11,7 +11,7 @@ class LogsAPI extends RESTDataSource {
     if (env === 'production') {
       return 'https://blog-users-api-alftirta.herokuapp.com';
     } else {
-      return 'http://localhost:3001';
+      return 'http://localhost:3002';
     }
   }
   
