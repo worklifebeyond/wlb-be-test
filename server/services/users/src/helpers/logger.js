@@ -15,7 +15,7 @@ async function log(path, user_object, access_token, request_start_time, request_
     const user = await User.findOne({ where: user_object });
     user_detail = user;
   } else if (access_token) {
-    const decoded_user_data = verify_jwt_token(access_token); console.log('hasilnya gimana guyssss =====', decoded_user_data);
+    const decoded_user_data = verify_jwt_token(access_token);
     const { id, username, email, status } = decoded_user_data;
     const user = await User.findOne({ where: { id, username, email, status }});
     user_detail = user;
