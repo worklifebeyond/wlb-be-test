@@ -15,6 +15,8 @@ const server = new ApolloServer({
       logsAPI: new LogsAPI(),
     };
   },
+  introspection: true,
+  playground: true,
 });
 
 server
