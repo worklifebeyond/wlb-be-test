@@ -10,10 +10,11 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  // sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(`postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@rosie.db.elephantsql.com:5432/${process.env.DB_NAME}`);
 } else {
   // sequelize = new Sequelize(config.database, config.username, config.password, config);
-  sequelize = new Sequelize(process.env.ELEPHANTSQL_URL);
+  sequelize = new Sequelize(`postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@rosie.db.elephantsql.com:5432/${process.env.DB_NAME}`);
 }
 
 fs

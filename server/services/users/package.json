@@ -17,10 +17,13 @@
     "sequelize": "^6.3.5"
   },
   "scripts": {
-    "start": "node src",
+    "start": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "14.11.0"
+  }
 }
