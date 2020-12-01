@@ -102,17 +102,35 @@ const models = `
   }
 
   type UserDetail {
+    id: Int
     username: String
     email: String
+    password: String
     status: String
+    createdAt: String
+    updatedAt: String
   }
 
   type RequestObject {
     method: String
+    url: String
+    header: RequestHeader
+  }
+
+  type RequestHeader {
+    host: String
+    accept: String
+    connection: String
   }
 
   type ResponseObject {
-    status_code: Int
+    status: String
+    message: String
+    header: ResponseHeader
+  }
+
+  type ResponseHeader {
+    vary: String
   }
 
   type LogOutputDelete {

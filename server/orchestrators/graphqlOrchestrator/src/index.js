@@ -4,6 +4,7 @@ const { ApolloServer } = require('apollo-server');
 const schema = require('./schema');
 const resolvers = require('./resolvers');
 const UsersAPI = require('./dataSources/usersAPI');
+const LogsAPI = require('./dataSources/logsAPI');
 
 const server = new ApolloServer({
   typeDefs: schema,
@@ -11,6 +12,7 @@ const server = new ApolloServer({
   dataSources() {
     return {
       usersAPI: new UsersAPI(),
+      logsAPI: new LogsAPI(),
     };
   },
 });

@@ -5,10 +5,7 @@ class LogsAPI extends RESTDataSource {
     super();
     this.baseURL = 'http://localhost:3002';
   }
-
-  async createLog(log) {
-    return this.post('/logs', log);
-  }
+  
   async readLogs() {
     return this.get('/logs');
   }

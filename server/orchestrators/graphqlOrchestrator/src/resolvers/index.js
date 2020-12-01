@@ -19,7 +19,6 @@ const {
   delete_comment,
   create_sub_comment,
   delete_sub_comment,
-  create_log,
   delete_log,
   reset_logs,
 } = require('./mutations');
@@ -45,7 +44,6 @@ const resolvers = {
     delete_comment,
     create_sub_comment,
     delete_sub_comment,
-    create_log,
     delete_log,
     reset_logs,
   },

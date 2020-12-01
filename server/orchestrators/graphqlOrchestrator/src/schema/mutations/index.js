@@ -65,18 +65,8 @@ const mutations = `
       access_token: String
     ): SubCommentOutputDelete
 
-    create_log(
-      path: String
-      username: String
-      email: String
-      status: String
-      api_access_time: Float
-      method: String
-      status_code: Int
-    ): Log
-
     delete_log(
-      id: Int
+      id: String
     ): LogOutputDelete
 
     reset_logs: LogOutputReset

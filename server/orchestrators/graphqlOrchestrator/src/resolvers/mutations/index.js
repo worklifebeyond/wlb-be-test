@@ -57,9 +57,6 @@ async function delete_sub_comment(_, { id, access_token }, { dataSources }) {
 }
 
 // handle log features :
-async function create_log(_, log, { dataSources }) {
-  return dataSources.logsAPI.createLog(log);
-}
 async function delete_log(_, { id }, { dataSources }) {
   return dataSources.logsAPI.deleteLog(id);
 }
@@ -80,7 +77,6 @@ module.exports = {
   delete_comment,
   create_sub_comment,
   delete_sub_comment,
-  create_log,
   delete_log,
   reset_logs,
 };
