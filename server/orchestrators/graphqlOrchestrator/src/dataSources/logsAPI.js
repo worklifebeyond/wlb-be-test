@@ -1,9 +1,18 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
+const env = process.env.NODE_ENV || 'development';
 
 class LogsAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'http://localhost:3002';
+    this.baseURL = this.chooseBaseURL(env);
+  }
+
+  chooseBaseURL(env) {
+    if (env === 'production') {
+      return 'https://blog-users-api-alftirta.herokuapp.com';
+    } else {
+      return 'http://localhost:3001';
+    }
   }
   
   async readLogs() {
