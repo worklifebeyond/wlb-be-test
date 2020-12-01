@@ -5,7 +5,7 @@ This document explains the Users services.
 
 The Users service has :
 
-* RESTful endpoints for user registration, verification, and login.
+* RESTful endpoints for user registration, verification, and login; and get all users data.
 * RESTful endpoints for CRUD, search, find-by-id, and find-by-user-id operations of blog posts.
 * RESTful endpoints for Create and Delete operations of likes, comments, and sub comments.
 * JSON formatted response.
@@ -14,6 +14,7 @@ The Users service has :
 
 ## Endpoints
 ```
+ - GET  /users
  - POST /users/register
  - GET  /users/verify?token=<account_verification_token>
  - POST /users/login
@@ -37,6 +38,98 @@ The Users service has :
 ```
 
 ## RESTful endpoints
+### GET /posts
+
+> Get all blog posts
+
+_Request Header_
+```
+{
+  "access_token": "<user's access token>"
+}
+*tidak wajib, hanya untuk keperluan logging data user
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+[
+  {
+    "id": <user's id>,
+    "username": "<user's name>",
+    "email": "<user's email>",
+    "password": "<user's hashed password>",
+    "status": "<user's account status>",
+    "createdAt": "<the time when the user was created>",
+    "updatedAt": "<the time when the user was updated>",
+    "Posts": [
+      {
+        "id": <post id>,
+        "title": "<post title>",
+        "content": "<post content>",
+        "UserId": <user's id>,
+        "createdAt": "<the time when the post was created>",
+        "updatedAt": "<the time when the post was updated>",
+        "Likes": [
+          {
+            "id": <like id>,
+            "PostId": <post id>,
+            "UserId": <user's id>
+          },
+          ...
+        ],
+        "Comments": [
+          {
+            "id": <comment id>,
+            "content": "<user's comment>",
+            "PostId": <post id>,
+            "UserId": <user's id>,
+            "SubComments": [
+              {
+                "id": <sub comment id>,
+                "content": "<user's sub comment>",
+                "CommentId": <comment id>,
+                "UserId": <user's id>
+              },
+              ...
+            ]
+          },
+          ...
+        ]
+      },
+      ...
+    ]
+  },
+  ...
+]
+```
+
+_Response (400 - Bad Request)_
+```
+[
+  "<error message>",
+  ...
+]
+```
+
+_Response (401 - Unauthorized)_
+```
+[
+  "The user is not authenticated."
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+[
+  "Internal Server Error"
+]
+```
+---
 ### POST /users/register
 
 > Register user

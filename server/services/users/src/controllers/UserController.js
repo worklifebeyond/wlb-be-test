@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Post, Like, Comment, SubComment } = require('../models');
 const { compare_bcrypt_password } = require('../helpers/bcrypt');
 const { generate_jwt_token, verify_jwt_token } = require('../helpers/jwt');
 const errorHandler = require('../helpers/errorHandler');
@@ -6,6 +6,45 @@ const sendEmail = require('../helpers/mailgun');
 const log = require('../helpers/logger');
 
 class UserController {
+  static async read(ctx) {
+    const start_time = Date.now();
+    try {
+      const all_users = await User.findAll({
+        include: [{
+          model: Post,
+          include: [{
+            model: Like,
+          }, {
+            model: Comment,
+            include: [SubComment],
+          }],
+        }],
+      });
+      ctx.response.status = 200;
+      ctx.response.body = all_users;
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        null,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
+    } catch(err) {
+      const { status, errors } = errHandler(err);
+      ctx.response.status = status;
+      ctx.response.body = errors;
+      log(
+        `${ctx.request.host}${ctx.request.url}`,
+        null,
+        ctx.request.header.access_token,
+        start_time,
+        ctx.request,
+        ctx.response,
+      );
+    }
+  }
+
   static async register(ctx) {
     const start_time = Date.now();
     const { username, email, password } = ctx.request.body;
