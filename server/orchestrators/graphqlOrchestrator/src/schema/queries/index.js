@@ -1,5 +1,9 @@
 const queries = `
   type Query {
+    users(
+      access_token: String
+    ): [User]
+    
     posts(
       access_token: String
     ): [Post]

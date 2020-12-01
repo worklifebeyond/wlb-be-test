@@ -1,7 +1,19 @@
 const Redis = require('ioredis');
 const redis = new Redis();
 
-// handle post features :
+// handle user query :
+async function users(_, { access_token }, { dataSources }) {
+  const cached_users = await redis.get('users');
+  if (cached_users) {
+    return JSON.parse(cached_users);
+  } else {
+    const users = await dataSources.usersAPI.readUsers(access_token);
+    await redis.set('users', JSON.stringify(users));
+    return users;
+  }
+}
+
+// handle post queries :
 async function posts(_, { access_token }, { dataSources }) {
   const cached_posts = await redis.get('posts');
   if (cached_posts) {
@@ -22,12 +34,13 @@ async function posts_by_user_id(_, { id, access_token }, { dataSources }) {
   return dataSources.usersAPI.findPostsByUserId(id, access_token);
 }
 
-// handle log feature :
+// handle log query :
 async function logs(_, __, { dataSources }) {
   return dataSources.logsAPI.readLogs();
 }
 
 module.exports = {
+  users,
   posts,
   search_posts,
   post_by_id,

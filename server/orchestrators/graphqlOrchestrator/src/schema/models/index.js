@@ -7,6 +7,7 @@ const models = `
     status: String
     createdAt: String
     updatedAt: String
+    Posts: [Post]
   }
 
   type UserOutputRegister {

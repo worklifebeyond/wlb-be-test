@@ -6,7 +6,14 @@ class UsersAPI extends RESTDataSource {
     this.baseURL = 'http://localhost:3001';
   }
 
-  // handle user registration, verification, and login features :
+  // handle user features :
+  async readUsers(token) {
+    return this.get(`/users`, null, {
+      headers: {
+        access_token: token,
+      },
+    });
+  }
   async registerUser(user) {
     return this.post('/users/register', user);
   }

@@ -1,4 +1,5 @@
 const {
+  users,
   posts,
   search_posts,
   post_by_id,
@@ -25,11 +26,12 @@ const {
 
 const resolvers = {
   Query: {
-   posts,
-   search_posts,
-   post_by_id,
-   posts_by_user_id,
-   logs,
+    users,
+    posts,
+    search_posts,
+    post_by_id,
+    posts_by_user_id,
+    logs,
   },
   Mutation: {
     register_user,
