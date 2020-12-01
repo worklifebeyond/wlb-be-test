@@ -31,7 +31,7 @@ async function log(path, user_object, access_token, request_start_time, request_
   }
 
   try {
-    await axios.post('http://localhost:3002/logs', {
+    await axios.post(process.env.LOGS_URL, {
       path,
       user_detail,
       api_access_time,
