@@ -25,17 +25,33 @@ class UsersAPI extends RESTDataSource {
       },
     });
   }
-  async readPosts() {
-    return this.get('/posts');
+  async readPosts(token) {
+    return this.get('/posts', null, {
+      headers: {
+        access_token: token,
+      },
+    });
   }
-  async searchPosts(title, sort, order) {
-    return this.get(`/posts/search?title=${title}&sort=${sort}&order=${order}`);
+  async searchPosts(title, sort, order, token) {
+    return this.get(`/posts/search?title=${title}&sort=${sort}&order=${order}`, null, {
+      headers: {
+        access_token: token,
+      },
+    });
   }
-  async findPostById(id) {
-    return this.get(`/posts/${id}`);
+  async findPostById(id, token) {
+    return this.get(`/posts/${id}`, null, {
+      headers: {
+        access_token: token,
+      },
+    });
   }
-  async findPostsByUserId(id) {
-    return this.get(`/posts/user/${id}`);
+  async findPostsByUserId(id, token) {
+    return this.get(`/posts/user/${id}`, null, {
+      headers: {
+        access_token: token,
+      },
+    });
   }
   async updatePost(id, post, token) {
     return this.put(`/posts/${id}`, post, {

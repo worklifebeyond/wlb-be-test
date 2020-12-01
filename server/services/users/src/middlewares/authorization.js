@@ -22,6 +22,7 @@ async function authorization_post(ctx, next) {
     ctx.response.body = errors;
     log(
       `${ctx.request.host}${ctx.request.url}`,
+      null,
       ctx.request.header.access_token,
       start_time,
       ctx.request,
@@ -49,6 +50,7 @@ async function authorization_like(ctx, next) {
     ctx.response.body = errors;
     log(
       `${ctx.request.host}${ctx.request.url}`,
+      null,
       ctx.request.header.access_token,
       start_time,
       ctx.request,
@@ -76,6 +78,7 @@ async function authorization_comment(ctx, next) {
     ctx.response.body = errors;
     log(
       `${ctx.request.host}${ctx.request.url}`,
+      null,
       ctx.request.header.access_token,
       start_time,
       ctx.request,
@@ -103,6 +106,7 @@ async function authorization_sub_comment(ctx, next) {
     ctx.response.body = errors;
     log(
       `${ctx.request.host}${ctx.request.url}`,
+      null,
       ctx.request.header.access_token,
       start_time,
       ctx.request,

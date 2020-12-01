@@ -25,6 +25,7 @@ class LikeController {
           ctx.response.body = like;
           log(
             `${ctx.request.host}${ctx.request.url}`,
+            null,
             ctx.request.header.access_token,
             start_time,
             ctx.request,
@@ -51,6 +52,7 @@ Someone just liked your post entitled "${post.title}".`,
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -72,6 +74,7 @@ Someone just liked your post entitled "${post.title}".`,
       };
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -83,6 +86,7 @@ Someone just liked your post entitled "${post.title}".`,
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,

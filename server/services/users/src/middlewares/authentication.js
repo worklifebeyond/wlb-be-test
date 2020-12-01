@@ -23,6 +23,7 @@ async function authentication(ctx, next) {
     ctx.response.body = errors;
     log(
       `${ctx.request.host}${ctx.request.url}`,
+      null,
       ctx.request.header.access_token,
       start_time,
       ctx.request,

@@ -21,6 +21,7 @@ class PostController {
       ctx.response.body = new_post;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -32,6 +33,7 @@ class PostController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -58,6 +60,7 @@ class PostController {
       ctx.response.body = all_posts;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -69,6 +72,7 @@ class PostController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -96,6 +100,7 @@ class PostController {
       ctx.response.body = posts;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -107,6 +112,7 @@ class PostController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -135,6 +141,7 @@ class PostController {
       ctx.response.body = posts;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -146,6 +153,7 @@ class PostController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -181,6 +189,7 @@ class PostController {
       ctx.response.body = { count, data };
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -192,6 +201,7 @@ class PostController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -219,6 +229,7 @@ class PostController {
       ctx.response.body = updated_post[1][0];
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -230,6 +241,7 @@ class PostController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -251,6 +263,7 @@ class PostController {
       };
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -262,6 +275,7 @@ class PostController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,

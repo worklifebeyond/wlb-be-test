@@ -24,6 +24,7 @@ class SubCommentController {
         ctx.response.body = sub_comment;
         log(
           `${ctx.request.host}${ctx.request.url}`,
+          null,
           ctx.request.header.access_token,
           start_time,
           ctx.request,
@@ -47,6 +48,7 @@ Someone just commented "${sub_comment.content}" on your comment "${comment.conte
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -68,6 +70,7 @@ Someone just commented "${sub_comment.content}" on your comment "${comment.conte
       };
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -79,6 +82,7 @@ Someone just commented "${sub_comment.content}" on your comment "${comment.conte
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,

@@ -58,15 +58,12 @@ async function delete_sub_comment(_, { id, access_token }, { dataSources }) {
 
 // handle log features :
 async function create_log(_, log, { dataSources }) {
-  await redis.del('logs');
   return dataSources.logsAPI.createLog(log);
 }
 async function delete_log(_, { id }, { dataSources }) {
-  await redis.del('logs');
   return dataSources.logsAPI.deleteLog(id);
 }
 async function reset_logs(_, __, { dataSources }) {
-  await redis.del('logs');
   return dataSources.logsAPI.resetLogs();
 }
 

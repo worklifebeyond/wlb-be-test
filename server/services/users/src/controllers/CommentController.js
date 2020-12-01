@@ -24,6 +24,7 @@ class CommentController {
         ctx.response.body = comment;
         log(
           `${ctx.request.host}${ctx.request.url}`,
+          null,
           ctx.request.header.access_token,
           start_time,
           ctx.request,
@@ -47,6 +48,7 @@ Someone just commented "${comment.content}" on your post entitled "${post.title}
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -68,6 +70,7 @@ Someone just commented "${comment.content}" on your post entitled "${post.title}
       };
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -79,6 +82,7 @@ Someone just commented "${comment.content}" on your post entitled "${post.title}
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,

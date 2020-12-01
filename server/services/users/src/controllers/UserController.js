@@ -24,6 +24,7 @@ class UserController {
       };
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        { username, email },
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -31,7 +32,7 @@ class UserController {
       );
 
       // Send email with Mailgun API :
-      const url = `http://localhost:3001/users/verify?token=${verification_token}`;
+      const url = `${process.env.BASE_URL}/users/verify?token=${verification_token}`;
       const email_data = {
         from: `Blog App Team <alf.tirta@gmail.com>`,
         to: `${new_user.email}`,
@@ -45,6 +46,7 @@ class UserController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        null,
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -82,6 +84,7 @@ class UserController {
         };
         log(
           `${ctx.request.host}${ctx.request.url}`,
+          { username: user.username, email: user.email },
           ctx.request.header.access_token,
           start_time,
           ctx.request,
@@ -94,6 +97,7 @@ class UserController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        { username: user.username, email: user.email },
         ctx.request.header.access_token,
         start_time,
         ctx.request,
@@ -127,6 +131,7 @@ class UserController {
           };
           log(
             `${ctx.request.host}${ctx.request.url}`,
+            { username: user.username, email: user.email },
             ctx.request.header.access_token,
             start_time,
             ctx.request,
@@ -140,6 +145,7 @@ class UserController {
       ctx.response.body = errors;
       log(
         `${ctx.request.host}${ctx.request.url}`,
+        { username: user.username, email: user.email },
         ctx.request.header.access_token,
         start_time,
         ctx.request,

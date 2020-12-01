@@ -238,7 +238,10 @@ _Response (500 - Internal Server Error)_
 
 _Request Header_
 ```
-not needed
+{
+  "access_token": "<user's access token>"
+}
+*tidak wajib, hanya untuk keperluan logging data user
 ```
 
 _Request Body_
@@ -344,7 +347,10 @@ _Response (500 - Internal Server Error)_
 
 _Request Header_
 ```
-not needed
+{
+  "access_token": "<user's access token>"
+}
+*tidak wajib, hanya untuk keperluan logging data user
 ```
 
 _Request Body_
@@ -439,7 +445,10 @@ _Response (500 - Internal Server Error)_
 
 _Request Header_
 ```
-not needed
+{
+  "access_token": "<user's access token>"
+}
+*tidak wajib, hanya untuk keperluan logging data user
 ```
 
 _Request Body_
@@ -528,7 +537,10 @@ _Response (500 - Internal Server Error)_
 
 _Request Header_
 ```
-not needed
+{
+  "access_token": "<user's access token>"
+}
+*tidak wajib, hanya untuk keperluan logging data user
 ```
 
 _Request Body_
