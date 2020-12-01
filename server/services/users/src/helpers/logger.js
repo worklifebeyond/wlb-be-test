@@ -1,6 +1,7 @@
 const { User } = require('../models');
 const { verify_jwt_token } = require('./jwt');
 const axios = require('axios');
+const env = process.env.NODE_ENV || 'development';
 
 async function log(path, user_object, access_token, request_start_time, request_object, response_object) {
   const api_access_time = Date.now() - request_start_time;
@@ -31,7 +32,13 @@ async function log(path, user_object, access_token, request_start_time, request_
   }
 
   try {
-    await axios.post(process.env.LOGS_URL, {
+    let logs_url;
+    if (env === 'production') {
+      logs_url = process.env.LOGS_URL;
+    } else {
+      logs_url = 'http://localhost:3002/logs';
+    }
+    await axios.post(logs_url, {
       path,
       user_detail,
       api_access_time,
