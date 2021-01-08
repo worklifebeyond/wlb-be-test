@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const mailgunloader = require('mailgun-js')
 const { verifyToken, signToken } = require('../helpers/jwt')
+const { comparePassword } = require('../helpers/bcrypt')
 
 let mailgun = mailgunloader({
     apiKey: process.env.APIKEY,
@@ -69,6 +70,32 @@ class UserController {
             ctx.response.status = 400
             ctx.response.body = {msg: 'link invalid'}
         }
+    }
+
+    static async login (ctx) {
+        const { email, password } = ctx.request.body
+
+        const loginUser = await User.findOne({
+            where: {
+                email,
+            }
+        })
+
+        if (!loginUser) {
+            ctx.response.status = 400
+            ctx.response.body = {msg: 'Email not found'}
+        } else {
+            const checkUser = comparePassword(password, loginUser.password)
+            if (!checkUser) {
+                ctx.response.status = 400
+                ctx.response.body = {msg: 'Invalid email/password'}
+            } else {
+                const token = signToken({email, id: loginUser.id})
+                ctx.response.status = 200
+                ctx.response.body = {msg: 'you are successfully login', token}
+            }
+        }
+       
     }
 }
 
