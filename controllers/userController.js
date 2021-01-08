@@ -78,12 +78,13 @@ class UserController {
         const loginUser = await User.findOne({
             where: {
                 email,
+                status: true
             }
         })
 
         if (!loginUser) {
             ctx.response.status = 400
-            ctx.response.body = {msg: 'Email not found'}
+            ctx.response.body = {msg: 'Email not found / not verified'}
         } else {
             const checkUser = comparePassword(password, loginUser.password)
             if (!checkUser) {
