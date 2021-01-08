@@ -19,6 +19,8 @@
   "homepage": "https://github.com/delviawp/wlb-be-test#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "kcors": "^2.2.2",
     "koa": "^2.13.1",
