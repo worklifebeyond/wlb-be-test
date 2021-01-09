@@ -22,7 +22,7 @@ class UserController {
             const link = `http://localhost:3000/register/verify?token=${token}`
             
             const data = {
-                from: 'Excited User <delviawp@gmail.com>',
+                from: "Delvia's Blog <delviawp@gmail.com>",
                 to: `${newUser.email}`,
                 subject: 'verify account',
                 text: 'Link verification: ' + link 
