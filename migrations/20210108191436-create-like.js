@@ -9,7 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       PostId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Posts',
+          key: 'id'
+        },
+        onUpdate: 'Cascade',
+        onDelete: 'Cascade'
       },
       UserId: {
         type: Sequelize.INTEGER

@@ -1,4 +1,4 @@
-const { Post, User } = require('../models')
+const { Post, User, Like, Comment } = require('../models')
 const { verifyToken } = require('../helpers/jwt')
 
 class PostController {
@@ -19,6 +19,29 @@ class PostController {
             const { title, description } = ctx.request.body
             const newPost = await Post.create({
                 title, description, UserId: loginUser.id
+            })
+            ctx.response.status = 201
+            ctx.response.body = {msg: 'success', data: newPost}
+        }
+    }
+
+    static async findAll(ctx) {
+        const {token} = ctx.request.headers
+        const decode = verifyToken(token)
+
+        const loginUser = await User.findOne({
+            where: {
+                email: decode.email
+            }
+        })
+        // console.log(loginUser, '<<<< ada gak lu?')
+        if(!loginUser) {
+            ctx.response.status = 400
+            ctx.response.body = {msg: 'invalid token'}
+        } else {
+            
+            const newPost = await Post.findAll({
+                include: {model: Like}
             })
             ctx.response.status = 201
             ctx.response.body = {msg: 'success', data: newPost}
@@ -107,9 +130,11 @@ class PostController {
             ctx.response.status = 400
             ctx.response.body = {msg: 'invalid token'}
         } else {
-            const { title } = ctx.request.params
-            const newPost = await Post.findOne({
-                where: {title}
+            const { title, filter, sortby } = ctx.request.params
+            const newPost = await Post.findAll({
+                where: {title},
+                include: [Like, Comment],
+                order: [[filter, sortby]]
             })
 
             // console.log(newPost, '<< ada kan')
@@ -118,6 +143,7 @@ class PostController {
                 ctx.response.status = 400
                 ctx.response.body = {msg: 'post not found'}
             } else {
+                
                 ctx.response.status = 200
                 ctx.response.body = {msg: 'success', data: newPost}
             }
