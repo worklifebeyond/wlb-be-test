@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Subcomment.belongsTo(models.Post)
+      Subcomment.belongsTo(models.Post)
       Subcomment.belongsTo(models.User)
       Subcomment.belongsTo(models.Comment)
     }

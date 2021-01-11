@@ -30,6 +30,7 @@
     "koa-router": "^10.0.0",
     "mailgun-js": "^0.22.0",
     "mongodb": "^3.6.3",
+    "mongoose": "^5.11.11",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5"
   },

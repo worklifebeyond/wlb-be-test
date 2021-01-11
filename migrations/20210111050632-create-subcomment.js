@@ -11,16 +11,16 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
-      // PostId: {
-      //   allowNull: false,
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: 'Posts',
-      //     key: 'id'
-      //   },
-      //   onUpdate: 'Cascade',
-      //   onDelete: 'Cascade'
-      // },
+      PostId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Posts',
+          key: 'id'
+        },
+        onUpdate: 'Cascade',
+        onDelete: 'Cascade'
+      },
       CommentId: {
         allowNull: false,
         type: Sequelize.INTEGER,

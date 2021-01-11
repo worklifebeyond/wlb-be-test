@@ -241,7 +241,8 @@ _Response (200)_
             "createdAt": "2021-01-11T03:03:41.033Z",
             "updatedAt": "2021-01-11T03:03:41.033Z",
             "Likes": [],
-            "Comments": []
+            "Comments": [],
+            "Subcomments": []
         },
         {
             "id": 3,
@@ -251,7 +252,8 @@ _Response (200)_
             "createdAt": "2021-01-11T03:07:03.540Z",
             "updatedAt": "2021-01-11T03:07:03.540Z",
             "Likes": [],
-            "Comments": []
+            "Comments": [],
+            "Subcomments": []
         }
     ]
 ```
@@ -414,4 +416,50 @@ _Response (400)_
 
 ```
     "msg": "please login first"
+```
+
+### Create SubComment
+
+> Create SubComment
+
+_Request Header_
+
+```
+token: <token>
+```
+
+_Request Body_
+
+```
+    "content": <input content>
+    "CommentId": <input comment id>
+```
+
+_Response (201)_
+
+```
+    "msg": "success",
+    "data": {
+        "id": 3,
+        "content": "love this comment!",
+        "CommentId": 1,
+        "UserId": 1,
+        "PostId": 1,
+        "updatedAt": "2021-01-11T14:58:24.651Z",
+        "createdAt": "2021-01-11T14:58:24.651Z"
+    }
+
+    notification send to email
+```
+
+_Response (400)_
+
+```
+    "msg": "please login first"
+```
+
+_Response (404)_
+
+```
+    "msg": "post not found"
 ```

@@ -1,4 +1,4 @@
-const { Subcomment, Comment, User } = require('../models')
+const { Subcomment, Comment, User, Post } = require('../models')
 const { verifyToken } = require('../helpers/jwt')
 
 const mailgunloader = require('mailgun-js')
@@ -23,10 +23,12 @@ class SubcommentController {
             ctx.response.status = 400
             ctx.response.body = {msg: 'please login first'}
         } else {
-            const { content } = ctx.request.body
+            const { content, CommentId } = ctx.request.body
             const { id } = ctx.request.params
 
-            const isSubComment = await Comment.findByPk(id)
+            const isSubComment = await Comment.findByPk(CommentId, {
+                include: [User, Post]
+            })
 
             // console.log(isSubComment, '<<< ada comment gak')
             
@@ -35,7 +37,7 @@ class SubcommentController {
                 ctx.response.body = {msg: 'not found'}
             } else {
                 const newSubComment = await Subcomment.create({
-                    content, UserId: loginUser.id, CommentId: id
+                    content, CommentId, UserId: loginUser.id, PostId: id
                 })
 
                 const data = {
