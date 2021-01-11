@@ -1,5 +1,6 @@
-const { Post, User, Like, Comment, sequelize } = require('../models')
+const { Post, User, Like, Comment, Subcomment } = require('../models')
 const { verifyToken } = require('../helpers/jwt')
+const subcomment = require('../models/subcomment')
 
 
 class PostController {
@@ -48,7 +49,7 @@ class PostController {
         } else {
             
             const newPost = await Post.findAll({
-                include: [Like, Comment]
+                include: [Like, Comment, Subcomment]
             })
             ctx.response.status = 201
             ctx.response.body = {msg: 'success', data: newPost}
@@ -174,7 +175,7 @@ class PostController {
         } else {
             const { title } = ctx.request.params
             const newPost = await Post.findAll({
-                where: {title},
+                where: [{title}],
                 include: [Like, Comment]
             })
 
