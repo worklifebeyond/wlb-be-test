@@ -11,10 +11,10 @@ let mailgun = mailgunloader({
 
 class UserController {
     static async register(ctx) {
-        const { email, password } = ctx.request.body;
+        const { username, email, password } = ctx.request.body;
         try {
             const newUser = await User.create({
-                email, password
+                username, email, password
             })
 
             const token = signToken({email: newUser.email})
@@ -41,6 +41,8 @@ class UserController {
             console.log('sukses')
             
         } catch (error) {
+            ctx.response.status = 400
+            ctx.response.body = {msg: 'Bad Request'}
             console.log(error, '<<< ini error')
         }
     }

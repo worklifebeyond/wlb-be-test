@@ -21,7 +21,7 @@ class CommentController {
         // console.log(loginUser, '<<<< ada gak lu?')
         if(!loginUser) {
             ctx.response.status = 400
-            ctx.response.body = {msg: 'invalid token'}
+            ctx.response.body = {msg: 'please login first'}
         } else {
             const { content } = ctx.request.body
             const { id } = ctx.request.params
@@ -32,7 +32,7 @@ class CommentController {
                 include: {model: User}
             })
             if (!getPost) {
-                ctx.response.status = 400
+                ctx.response.status = 404
                 ctx.response.body = {msg: 'post not found'}
             } else {
                 const newComment = await Comment.create({

@@ -21,7 +21,7 @@ class LikeController {
         // console.log(loginUser, '<<<< ada gak lu?')
         if(!loginUser) {
             ctx.response.status = 400
-            ctx.response.body = {msg: 'invalid token'}
+            ctx.response.body = {msg: 'please login first'}
         } else {
             const {id} = ctx.request.params
             const getPost = await Post.findOne({
@@ -30,9 +30,9 @@ class LikeController {
                 },
                 include: { model:User}
             })
-            console.log(getPost.User, '<< ada gak')
+            // console.log(getPost.User, '<< ada gak')
             if (!getPost) {
-                ctx.response.status = 400
+                ctx.response.status = 404
                 ctx.response.body = {msg: 'post not found'}
             } else {
                 const newLikes = await Like.create({

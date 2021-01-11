@@ -10,6 +10,7 @@ const postRoute = (router) => {
     router.delete('/post/:id', PostController.delete)
     router.post('/post/:id/comment', CommentController.create)
     router.post('/post/:id/like', LikeController.add)
+    router.get('/post/:title', PostController.findByTitle)
     router.get('/post/:title&:filter&:sortby', PostController.findPost)
 }
 
