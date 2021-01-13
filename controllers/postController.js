@@ -1,6 +1,6 @@
 const { Post, User, Like, Comment, Subcomment } = require('../models')
 const { verifyToken } = require('../helpers/jwt')
-const subcomment = require('../models/subcomment')
+const  Sequelize  = require('sequelize')
 
 
 class PostController {
@@ -34,6 +34,7 @@ class PostController {
     }
 
     static async findAll(ctx) {
+        
         const {token} = ctx.request.headers
         const decode = verifyToken(token)
 
@@ -42,18 +43,27 @@ class PostController {
                 email: decode.email
             }
         })
-        // console.log(loginUser, '<<<< ada gak lu?')
-        if(!loginUser) {
-            ctx.response.status = 400
-            ctx.response.body = {msg: 'please login first'}
-        } else {
+
+        try {
             
-            const newPost = await Post.findAll({
-                include: [Like, Comment, Subcomment]
-            })
-            ctx.response.status = 201
-            ctx.response.body = {msg: 'success', data: newPost}
-        }
+            if(!loginUser) {
+                ctx.response.status = 400
+                ctx.response.body = {msg: 'please login first'}
+            } else {
+                    
+                const newPost = await Post.findAll({
+                    include: [Like, Comment, Subcomment]
+                })
+                ctx.response.status = 200
+                // console.log(ctx.response.headers, '<<<< coba ini')
+                ctx.response.body = {msg: 'success', data: newPost}
+                
+            }
+        } catch (error) {
+            console.log(error)
+        
+        // console.log(loginUser, '<<<< ada gak lu?')
+        
     }
 
     static async edit(ctx) {
@@ -136,16 +146,22 @@ class PostController {
 
         if(!loginUser) {
             ctx.response.status = 400
-            ctx.response.body = {msg: 'invalid token'}
+            ctx.response.body = {msg: 'please login first'}
         } else {
             const { title, filter, sortby } = ctx.request.params
             const newPost = await Post.findAll({
                 where: {title},
-                // attributes: { include: [[sequelize.fn('COUNT', sequelize.col('Likes.id')), 'LikesCount']] },
+                subQuery: false,
+                // attributes: {
+                //     include: [[Sequelize.fn("COUNT", Sequelize.col("Likes.id")), "LikesCount"],
+                //     [Sequelize.fn("COUNT", Sequelize.col("Comments.id")), "CommentsCount"]]
+                // },
                 include: [Like, Comment],
-                order: [[filter, sortby]],
-                // group: ['Post.id']
+                // order: [["LikesCount", "Desc"]],
+                // group: ["Likes.id", "Post.id", "Comment.id"]
             })
+
+           
 
             console.log(newPost, '<< ada kan')
 
@@ -158,6 +174,7 @@ class PostController {
             }
         }
     }
+
 
     static async findByTitle(ctx) {
         const { token } = ctx.request.headers
