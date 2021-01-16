@@ -76,13 +76,14 @@ class UserController {
 
     static async login (ctx) {
         const { email, password } = ctx.request.body
-
+    
         const loginUser = await User.findOne({
             where: {
                 email,
                 status: true
             }
         })
+        // console.log(loginUser, '<<< ini keluar gak ')
 
         if (!loginUser) {
             ctx.response.status = 400

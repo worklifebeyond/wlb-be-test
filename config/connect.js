@@ -20,9 +20,9 @@
 // const kitty = new Cat({ name: 'Zildjian' });
 // kitty.save().then(() => console.log('meow'));
 
-const connexionString = 'mongodb://localhost:27017/test'
+// const connexionString = 'mongodb://localhost:27017/test'
 
-module.exports = {
-    connexionString
-}
+// module.exports = {
+//     connexionString
+// }
 

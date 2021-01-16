@@ -6,13 +6,13 @@ const cors = require('kcors')
 
 const app = new Koa()
 const route = new Router()
-const mongoose = require('mongoose')
-const { connexionString } = require('./config/connect')
-// const ro uting = require('./routes')
+// const mongoose = require('mongoose')
+// const { connexionString } = require('./config/connect')
+const routing = require('./routes')
 const port = process.env.PORT || 3000
-const log = require('./middlewares/log')
+// const log = require('./middlewares/log')
 
-mongoose.connect(connexionString)
+// mongoose.connect(connexionString)
 // mongoose.connection.on('error', console.log.error)
 
 app
@@ -20,7 +20,9 @@ app
   .use(bodyParser())
   .use(route.routes())
   .use(route.allowedMethods())
-  .use(log)
+  // .use(log)
+
+  routing(route)
 
 app.listen(port, () => {
   console.log(`listening to ${port}`)

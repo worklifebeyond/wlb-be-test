@@ -65,6 +65,7 @@ class PostController {
         // console.log(loginUser, '<<<< ada gak lu?')
         
     }
+}
 
     static async edit(ctx) {
         const {token} = ctx.request.headers
