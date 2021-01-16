@@ -10,7 +10,7 @@ Delvia's Blog
 - Comment the Post
 - Search by Title
 
-### POST / REGISTER
+### POST / register
 
 > Create a new user account
 > _Request Header_
@@ -69,7 +69,7 @@ _Response (400)_
     "msg": "bad request"
 ```
 
-### POST / LOGIN
+### POST / login
 
 > Login for Existing User
 > _Request Header_
@@ -106,7 +106,7 @@ _Response (400)_
     "msg": "Invalid email/password"
 ```
 
-### POST / CREATE POST
+### POST / post
 
 > Create post
 
@@ -145,7 +145,7 @@ _Response (400)_
     "msg": "please input the title / description"
 ```
 
-### PUT / POST / :id
+### PUT / post / :id
 
 > Edit existing post
 
@@ -184,7 +184,7 @@ _Response (404)_
     "msg": "post not found"
 ```
 
-### DELETE / POST / :id
+### DELETE / post / :id
 
 > Delete Post
 
@@ -212,7 +212,7 @@ _Response (404)_
     "msg": "post not found"
 ```
 
-### GET / POST
+### GET / post
 
 > Fetch all posts
 
@@ -264,7 +264,7 @@ _Response (400)_
     "msg": "please login first"
 ```
 
-### POST / :id / LIKE
+### POST / :id / like
 
 > Like a Post
 
@@ -351,7 +351,7 @@ _Response (404)_
     "msg": "post not found"
 ```
 
-### GET / POST / :title
+### GET / post / :title
 
 > Fetch post by Title
 
@@ -418,7 +418,7 @@ _Response (400)_
     "msg": "please login first"
 ```
 
-### Create SubComment
+### POST / comment / :id / subcomment
 
 > Create SubComment
 

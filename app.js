@@ -9,7 +9,7 @@ const route = new Router()
 const mongoose = require('mongoose')
 const { connexionString } = require('./config/connect')
 // const ro uting = require('./routes')
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 const log = require('./middlewares/log')
 
 mongoose.connect(connexionString)
