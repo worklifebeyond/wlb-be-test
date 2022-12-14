@@ -6,9 +6,9 @@
 
 2. Email Notification. Bisa memakai Sendgrid: https://sendgrid.com/pricing/ atau mailgun: https://www.mailgun.com/
 
-3. Node JS. Download di: https://nodejs.org/en/download/
+3. Dibagung dengan Golang
 
-4. `VPS`, `Server`, `PaaS` yang dapat menjalankan aplikasi Node JS. Bisa memakai free tier Heroku: https://www.heroku.com/pricing
+4. `VPS`, `Server`, `PaaS` yang dapat menjalankan aplikasi Golang. Bisa memakai free tier Heroku: https://www.heroku.com/pricing
 
 5. `MongoDB`: Bisa memakai free tier dari mongodb atlas https://www.mongodb.com/cloud/atlas
 
@@ -45,7 +45,7 @@ Membuat API untuk aplikasi Blog yang memiliki fitur:
 
 ### Ketentuan
 
-1. Dibangun menggunakan framework Koa JS. Sequelize untuk ORM PostgreSQL dan Mongoose untuk MongoDB.
+1. Dibangun menggunakan Golang. GORM untuk ORM PostgreSQL dan Mongoose untuk MongoDB.
 
 2. Menyertakan ERD dari rancangan database yang dibuat.
 
